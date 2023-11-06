@@ -5,11 +5,11 @@ set(SOURCES
 	"${SOURCE_DIR}/main.cpp"
 )
 
-include_directories(${CMAKE_SOURCE_DIR}/Spoon/src)
-
 find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(ImGui-SFML CONFIG REQUIRED)
+
+include_directories(${CMAKE_SOURCE_DIR}/Spoon/src)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
