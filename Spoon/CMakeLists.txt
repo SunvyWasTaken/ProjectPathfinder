@@ -48,7 +48,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-network sfml-grap
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${SOURCE_FILES})
 
-set(PROJECT_TARGET sfml-imgui-template)
+set(PROJECT_TARGET ProjectPathfinder)
 
 set(CMAKE_BUILD_TYPE Debug)
 

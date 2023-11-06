@@ -13,4 +13,4 @@ project(${PROJECT_NAME})
 add_subdirectory(${PROJECT_NAME})
 add_subdirectory(Spoon)
 
-include("${CMAKE_SOURCE_DIR}/lib/vcpkg/scripts/buildsystems/vcpkg.cmake")
+include("${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
