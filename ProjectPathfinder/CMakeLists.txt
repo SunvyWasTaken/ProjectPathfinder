@@ -7,6 +7,10 @@ set(SOURCES
 
 include_directories(${CMAKE_SOURCE_DIR}/Spoon/src)
 
+find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(ImGui-SFML CONFIG REQUIRED)
+
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 add_dependencies(${PROJECT_NAME} Spoon)
