@@ -11,6 +11,6 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 add_dependencies(${PROJECT_NAME} Spoon)
 
-#target_link_libraries(	Spoon )
+target_link_libraries(${PROJECT_NAME} PRIVATE Spoon )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

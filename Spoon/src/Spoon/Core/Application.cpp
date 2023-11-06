@@ -24,7 +24,7 @@ void Application::Run()
 
 void Application::OnEvent()
 {
-	// Ici faire un event type pour les trier.
+	// Ici dfaire un event type pour les trier.
 		// call si l'event est window close.
 		OnWindowClose();
 }
