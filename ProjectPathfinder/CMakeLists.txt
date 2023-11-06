@@ -11,6 +11,6 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 add_dependencies(${PROJECT_NAME} Spoon)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Spoon )
+target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-network sfml-graphics sfml-window Spoon )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
