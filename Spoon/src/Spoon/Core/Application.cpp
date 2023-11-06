@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Level.h"
+#include "Window.h"
 
 Application::Application()
 {

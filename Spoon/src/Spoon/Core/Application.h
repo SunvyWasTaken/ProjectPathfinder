@@ -1,9 +1,9 @@
 #pragma once
 #include "snpch.h"
 #include "Core.h"
-#include "Window.h"
 
 class Level;
+class Window;
 
 class SPOON_API Application
 {

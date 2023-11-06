@@ -1,7 +1,0 @@
-{
-    "dependencies": [
-        "sfml",
-	"imgui",
-	"sfml-imgui"
-    ]
-}
