@@ -13,9 +13,11 @@ public:
 
 	void Run();
 
-	void OnEvent();
+	void OnEvent(class Event& e);
 
-	void OnWindowClose();
+	bool OnWindowClose(class WindowCloseEvent& e);
+
+	bool OnKeyPressed(class KeyPressedEvent& e);
 
 	Level* GetWorld() const;
 

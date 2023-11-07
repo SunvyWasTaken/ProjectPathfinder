@@ -1,5 +1,6 @@
 #pragma once
 #include "Spoon/Core/Core.h"
+#include "Spoon/Events/Event.h"
 
 struct WindowsProps
 {
@@ -18,11 +19,13 @@ struct WindowsProps
 class SPOON_API Window
 {
 public:
+	using EventCallBackFn = std::function<void(Event&)>;
+
 
 	virtual ~Window() {};
 
 	virtual void OnUpdate() = 0;
-	virtual void SetEventCallback(const std::function<void()>& callback) = 0;
+	virtual void SetEventCallback(const EventCallBackFn& callback) = 0;
 	virtual unsigned int GetWidth() const = 0;
 	virtual unsigned int GetHeight() const = 0;
 

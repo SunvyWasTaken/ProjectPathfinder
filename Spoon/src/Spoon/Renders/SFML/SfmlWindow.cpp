@@ -1,5 +1,6 @@
 #include "SfmlWindow.h"
-
+#include "Spoon/Events/KeyEvent.h"
+#include "Spoon/Events/ApplicationEvent.h"
 
 // Function call de maniere indirect lorsque j'ai besoin de la fenetre.
 Window* Window::Create(const WindowsProps& props)
@@ -23,10 +24,7 @@ void SfmlWindow::OnUpdate()
 	sf::Event event;
 	while (WindowRef->pollEvent(event))
 	{
-		if (event.type == sf::Event::Closed)
-		{
-			EventCallBack();
-		}
+		HandleEvent(event);
 	}
 	WindowRef->clear();
 	WindowRef->display();
@@ -55,4 +53,18 @@ void SfmlWindow::Init(const WindowsProps& props)
 void SfmlWindow::Shutdown()
 {
 	WindowRef->close();
+}
+
+void SfmlWindow::HandleEvent(sf::Event& event)
+{
+	if (event.type == sf::Event::KeyPressed)
+	{
+		KeyPressedEvent tmpevent(event.key.scancode);
+		EventCallBack(tmpevent);
+	}
+	else if (event.type == sf::Event::Closed)
+	{
+		WindowCloseEvent tmpevent;
+		EventCallBack(tmpevent);
+	}
 }
