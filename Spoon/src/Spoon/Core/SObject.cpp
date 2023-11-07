@@ -4,24 +4,30 @@
 
 SObject::SObject()
 {
-	Render = std::make_unique<ObjectRender>();
+	Render = ObjectRender::Create();
+	Render->RenderLocation = &ObjectLocation;
+	Render->Init();
 }
 
 SObject::~SObject()
-{}
+{
+	delete Render;
+}
 
 void SObject::BeginPlay()
 {}
 
 void SObject::Tick(float DeltaTime)
-{}
+{
+	
+}
 
 FVector2D SObject::GetLocation() const
 {
 	return ObjectLocation;
 }
 
-void SObject::AddActorLocation(FVector2D& _val)
+void SObject::SetLocation(const FVector2D& loc)
 {
-	ObjectLocation += _val;
+	ObjectLocation = loc;
 }

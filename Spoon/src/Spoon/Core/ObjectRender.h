@@ -3,13 +3,18 @@
 
 class SPOON_API ObjectRender
 {
-	public:
+public:
 
 	ObjectRender();
 
 	virtual ~ObjectRender();
 
-	void Render();
+	virtual void SpoonDraw(class Window* windowRef) = 0;
 
+	static ObjectRender* Create();
+
+	virtual void Init() = 0;
+
+	FVector2D* RenderLocation;
 
 };

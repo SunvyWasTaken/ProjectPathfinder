@@ -13,8 +13,9 @@ Level::~Level()
 
 void Level::UpdateEntity()
 {
-	for (unsigned i = 0; i < EntityList.size(); ++i)
+	for (auto entity : EntityList)
 	{
-		
+		// TODO A changer pour avoir l'actuel tick X)
+		entity->Tick(1/120);
 	}
 }

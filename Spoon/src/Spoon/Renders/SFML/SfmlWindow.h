@@ -4,6 +4,8 @@
 
 #include <SFML/Graphics.hpp>
 
+namespace sf { class Shape; };
+
 class SPOON_API SfmlWindow : public Window
 {
 public:
@@ -12,10 +14,12 @@ public:
 
 	void OnUpdate() override;
 
-	inline void SetEventCallback(const std::function<void()>& callback) override { EventCallBack = callback;};
+	inline void SetEventCallback(const EventCallBackFn& callback) override { EventCallBack = callback;};
 	
 	unsigned int GetWidth() const override;
 	unsigned int GetHeight() const override;
+
+	void Draw(sf::Shape& currentShape);
 
 private:
 	
@@ -32,7 +36,9 @@ private:
 
 	Data m_Data;
 
+	void HandleEvent(sf::Event& event);
+
 	// Function to callback
-	std::function<void()> EventCallBack;
+	EventCallBackFn EventCallBack;
 };
 
