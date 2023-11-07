@@ -5,6 +5,8 @@
 SObject::SObject()
 {
 	Render = ObjectRender::Create();
+	Render->RenderLocation = &ObjectLocation;
+	Render->Init();
 }
 
 SObject::~SObject()
@@ -25,7 +27,7 @@ FVector2D SObject::GetLocation() const
 	return ObjectLocation;
 }
 
-void SObject::AddActorLocation(FVector2D& _val)
+void SObject::SetLocation(const FVector2D& loc)
 {
-	ObjectLocation += _val;
+	ObjectLocation = loc;
 }

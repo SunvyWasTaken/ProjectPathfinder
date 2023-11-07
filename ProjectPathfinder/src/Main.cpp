@@ -7,7 +7,7 @@ int main()
 {
 	
 	auto* app = new Application();
-	app->GetWorld()->SpawnActor<SObject>(FVector2D());
+	app->GetWorld()->SpawnActor<SObject>(FVector2D(50, 80));
 	app->Run();
 	delete app;
 

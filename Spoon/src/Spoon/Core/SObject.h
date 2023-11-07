@@ -19,7 +19,7 @@ public:
 
 	FVector2D GetLocation() const;
 
-	void AddActorLocation(FVector2D& _val);
+	void SetLocation(const FVector2D& loc);
 
 	ObjectRender* GetRender() const { return Render; };
 

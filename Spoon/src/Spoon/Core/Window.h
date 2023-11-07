@@ -21,7 +21,6 @@ class SPOON_API Window
 public:
 	using EventCallBackFn = std::function<void(SpoonEvent&)>;
 
-
 	virtual ~Window() {};
 
 	virtual void OnUpdate() = 0;

@@ -23,7 +23,7 @@ public:
 		SObject* tmp = new T();
 		if (tmp)
 		{
-			tmp->AddActorLocation(_location);
+			tmp->SetLocation(_location);
 			EntityList.push_back(tmp);
 		}
 		// Cast vide du coup c mort.
