@@ -1,8 +1,8 @@
 #pragma once
-#include "Event.h"
+#include "SpoonEvent.h"
 #include "Spoon/Core/KeyCode.h"
 
-class KeyEvent : public Event
+class KeyEvent : public SpoonEvent
 {
 public:
 	KeyCode GetKeyCode() const { return m_KeyCode; }

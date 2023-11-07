@@ -1,6 +1,6 @@
-#include "Event.h"
+#include "SpoonEvent.h"
 
-class WindowResizeEvent : public Event
+class WindowResizeEvent : public SpoonEvent
 {
 public:
 	WindowResizeEvent(unsigned int width, unsigned int height)
@@ -22,7 +22,7 @@ private:
 	unsigned int m_Width, m_Height;
 };
 
-class WindowCloseEvent : public Event
+class WindowCloseEvent : public SpoonEvent
 {
 public:
 	WindowCloseEvent() = default;
@@ -31,7 +31,7 @@ public:
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
-class AppTickEvent : public Event
+class AppTickEvent : public SpoonEvent
 {
 public:
 	AppTickEvent() = default;
@@ -40,7 +40,7 @@ public:
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
-class AppUpdateEvent : public Event
+class AppUpdateEvent : public SpoonEvent
 {
 public:
 	AppUpdateEvent() = default;
@@ -49,7 +49,7 @@ public:
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
-class AppRenderEvent : public Event
+class AppRenderEvent : public SpoonEvent
 {
 public:
 	AppRenderEvent() = default;

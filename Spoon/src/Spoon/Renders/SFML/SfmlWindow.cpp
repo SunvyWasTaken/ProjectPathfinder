@@ -21,12 +21,14 @@ SfmlWindow::~SfmlWindow()
 
 void SfmlWindow::OnUpdate()
 {
+	WindowRef->clear();
 	sf::Event event;
 	while (WindowRef->pollEvent(event))
 	{
 		HandleEvent(event);
 	}
-	WindowRef->clear();
+	AppRenderEvent RenderEvent;
+	EventCallBack(RenderEvent);
 	WindowRef->display();
 }
 
@@ -38,6 +40,11 @@ unsigned int SfmlWindow::GetWidth() const
 unsigned int SfmlWindow::GetHeight() const
 {
 	return m_Data.Height;
+}
+
+void SfmlWindow::Draw(sf::Shape& currentShape)
+{
+	WindowRef->draw(currentShape);
 }
 
 void SfmlWindow::Init(const WindowsProps& props)
@@ -61,10 +68,13 @@ void SfmlWindow::HandleEvent(sf::Event& event)
 	{
 		KeyPressedEvent tmpevent(event.key.scancode);
 		EventCallBack(tmpevent);
+		return;
 	}
-	else if (event.type == sf::Event::Closed)
+	if (event.type == sf::Event::Closed)
 	{
 		WindowCloseEvent tmpevent;
 		EventCallBack(tmpevent);
+		return;
 	}
+	// TODO mettre le reste des events qui pourrais servire ici.
 }

@@ -4,17 +4,21 @@
 
 SObject::SObject()
 {
-	Render = std::make_unique<ObjectRender>();
+	Render = ObjectRender::Create();
 }
 
 SObject::~SObject()
-{}
+{
+	delete Render;
+}
 
 void SObject::BeginPlay()
 {}
 
 void SObject::Tick(float DeltaTime)
-{}
+{
+	
+}
 
 FVector2D SObject::GetLocation() const
 {

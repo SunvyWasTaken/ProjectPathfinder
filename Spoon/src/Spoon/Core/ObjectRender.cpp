@@ -8,7 +8,3 @@ ObjectRender::ObjectRender()
 ObjectRender::~ObjectRender()
 {
 }
-
-void ObjectRender::Render()
-{
-}

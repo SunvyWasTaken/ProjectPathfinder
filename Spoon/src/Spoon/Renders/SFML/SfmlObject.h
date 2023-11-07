@@ -1,8 +1,20 @@
 #pragma once
 #include "Spoon/Core/ObjectRender.h"
 
-class SPOON_API SfmlRender : public ObjectRender
+namespace sf { class RectangleShape; }
+
+class SfmlRender : public ObjectRender
 {
 public:
-	//void Draw();
+	
+	SfmlRender();
+
+	virtual ~SfmlRender() { delete shape; };
+
+	void SpoonDraw(class Window* windowRef) override;
+
+private:
+
+	sf::RectangleShape* shape;
+
 };

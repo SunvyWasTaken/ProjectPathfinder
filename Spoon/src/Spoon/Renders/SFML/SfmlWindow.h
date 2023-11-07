@@ -4,6 +4,8 @@
 
 #include <SFML/Graphics.hpp>
 
+namespace sf { class Shape; };
+
 class SPOON_API SfmlWindow : public Window
 {
 public:
@@ -16,6 +18,8 @@ public:
 	
 	unsigned int GetWidth() const override;
 	unsigned int GetHeight() const override;
+
+	void Draw(sf::Shape& currentShape);
 
 private:
 	

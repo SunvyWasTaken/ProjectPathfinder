@@ -24,21 +24,17 @@ public:
 		if (tmp)
 		{
 			tmp->AddActorLocation(_location);
-			ObjectToAdd.push_back(tmp);
+			EntityList.push_back(tmp);
 		}
 		// Cast vide du coup c mort.
 		return tmp;
 	}
+
+	std::vector<SObject*> GetEntityList() const { return EntityList; }
 	
 protected:
 
 	// Entity actuellement dans le world.
 	std::vector<SObject*> EntityList;
-
-	// Entity à crée dans la frame suivante.
-	std::vector<SObject*> ObjectToAdd;
-
-	// Entity Des objets à detruire à la fin de la frame.
-	std::vector<SObject*> ObjectToDestroy;
 };
 

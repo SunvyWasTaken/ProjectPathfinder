@@ -1,6 +1,6 @@
 #pragma once
 #include "Spoon/Core/Core.h"
-#include "Spoon/Events/Event.h"
+#include "Spoon/Events/SpoonEvent.h"
 
 struct WindowsProps
 {
@@ -19,7 +19,7 @@ struct WindowsProps
 class SPOON_API Window
 {
 public:
-	using EventCallBackFn = std::function<void(Event&)>;
+	using EventCallBackFn = std::function<void(SpoonEvent&)>;
 
 
 	virtual ~Window() {};

@@ -1,8 +1,10 @@
 #pragma once
 #include "Core.h"
 #include "Spoon/Library/FMath.h"
+
 class ObjectRender;
 
+// Object base. 
 class SPOON_API SObject
 {
 public:
@@ -19,11 +21,13 @@ public:
 
 	void AddActorLocation(FVector2D& _val);
 
+	ObjectRender* GetRender() const { return Render; };
+
 protected:
 
 	FVector2D ObjectLocation;
 
-	std::unique_ptr<ObjectRender> Render;
+	ObjectRender* Render;
 
 };
 
