@@ -1,4 +1,3 @@
-#include "snpch.h"
 #include "Application.h"
 #include "Level.h"
 
@@ -8,17 +7,28 @@
 
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
-Application::Application()
+Application::Application() : WindowName("Spoon Engine"), ScreenSize(FVector2D(1280, 720))
 {
-	WindowRef = Window::Create();
-	WindowRef->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+	Init();
+}
 
-	CurrentLevel = new Level();
+Application::Application(std::string windowName, FVector2D screensize) : WindowName(windowName), ScreenSize(screensize)
+{
+	Init();
 }
 
 Application::~Application()
 {
 	delete CurrentLevel;
+}
+
+void Application::Init()
+{
+	WindowsProps win(WindowName, ScreenSize.X, ScreenSize.Y);
+	WindowRef = Window::Create(win);
+	WindowRef->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+
+	CurrentLevel = new Level();
 }
 
 void Application::Run()
