@@ -13,8 +13,8 @@ public:
 
 	static ObjectRender* Create();
 
-	virtual void Init() = 0;
-
 	FVector2D* RenderLocation;
+
+	FColor* ObjectColor;
 
 };

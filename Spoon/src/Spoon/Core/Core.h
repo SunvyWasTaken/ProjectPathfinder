@@ -9,4 +9,6 @@ template <typename T> struct Vector2D;
 
 using FVector2D = Vector2D<float>;
 
+struct FColor;
+
 #define BIT(x) (1 << x)

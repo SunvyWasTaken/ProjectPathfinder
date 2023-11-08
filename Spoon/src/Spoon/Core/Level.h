@@ -18,13 +18,13 @@ public:
 	void UpdateEntity();
 
 	template<typename T>
-	__forceinline SObject* SpawnActor(FVector2D _location)
+	__forceinline T* SpawnActor(FVector2D _location)
 	{
-		SObject* tmp = new T();
+		T* tmp = new T();
 		if (tmp)
 		{
 			tmp->SetLocation(_location);
-			EntityList.push_back(tmp);
+			AddEntityList.push_back(tmp);
 		}
 		// Cast vide du coup c mort.
 		return tmp;
@@ -36,5 +36,7 @@ protected:
 
 	// Entity actuellement dans le world.
 	std::vector<SObject*> EntityList;
+
+	std::vector<SObject*> AddEntityList;
 };
 

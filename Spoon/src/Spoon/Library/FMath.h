@@ -1,5 +1,7 @@
 #pragma once
 
+#pragma region Vector
+
 template <typename T>
 struct Vector2D
 {
@@ -68,5 +70,33 @@ __forceinline Vector2D<T> operator-(Vector2D<T>& right, T& left)
 {
 	return Vector2D<T>(right.X - left, right.Y - left);
 }
+
+#pragma endregion
+
+#pragma endregion Vector
+
+#pragma region Color
+struct FColor
+{
+	unsigned char R;
+	unsigned char G;
+	unsigned char B;
+	unsigned char A;
+
+	FColor() : R(0), G(0), B(0), A(0) {};
+
+	FColor(const unsigned char& val) : R(val), G(val), B(val), A(val) {};
+
+	FColor(const unsigned char& color, unsigned char alpha) : R(color), G(color), B(color), A(alpha) {};
+
+	FColor(const unsigned char& r, const unsigned char& g, const unsigned char& b) : R(r), G(g), B(b), A(255) {};
+
+	FColor(const unsigned char& r, const unsigned char& g, const unsigned char& b, const unsigned char& a) : R(r), G(g), B(b), A(a) {};
+
+	static FColor Zero() { return FColor(0); }
+
+	static FColor White() { return FColor(255); }
+
+};
 
 #pragma endregion

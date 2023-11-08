@@ -4,6 +4,11 @@
 
 Level::~Level()
 {
+	auto ListObj = AddEntityList;
+	for (auto& obj : ListObj)
+	{
+		delete obj;
+	}
 	auto ListObject = EntityList;
 	for (auto& object : ListObject)
 	{
@@ -13,7 +18,13 @@ Level::~Level()
 
 void Level::UpdateEntity()
 {
-	for (auto entity : EntityList)
+	for (auto& addEntity : AddEntityList)
+	{
+		EntityList.push_back(addEntity);
+		addEntity->BeginPlay();
+	}
+	AddEntityList.clear();
+	for (auto& entity : EntityList)
 	{
 		// TODO A changer pour avoir l'actuel tick X)
 		entity->Tick(1/120);

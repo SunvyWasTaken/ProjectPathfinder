@@ -1,4 +1,3 @@
-#include "snpch.h"
 #include "Application.h"
 #include "Level.h"
 
@@ -8,17 +7,28 @@
 
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
-Application::Application()
+Application::Application() : WindowName("Spoon Engine"), ScreenSize(FVector2D(1280, 720))
 {
-	WindowRef = Window::Create();
-	WindowRef->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+	Init();
+}
 
-	CurrentLevel = new Level();
+Application::Application(std::string windowName, FVector2D screensize) : WindowName(windowName), ScreenSize(screensize)
+{
+	Init();
 }
 
 Application::~Application()
 {
 	delete CurrentLevel;
+}
+
+void Application::Init()
+{
+	WindowsProps win(WindowName, ScreenSize.X, ScreenSize.Y);
+	WindowRef = Window::Create(win);
+	WindowRef->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+
+	CurrentLevel = new Level();
 }
 
 void Application::Run()
@@ -38,6 +48,7 @@ void Application::OnEvent(SpoonEvent& e)
 	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 	dispatcher.Dispatch<AppTickEvent>(BIND_EVENT_FN(Application::OnAppTick));
 	dispatcher.Dispatch<AppRenderEvent>(BIND_EVENT_FN(Application::OnRender));
+	dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 }
 
 bool Application::OnWindowClose(WindowCloseEvent& e)
@@ -68,6 +79,11 @@ bool Application::OnRender(AppRenderEvent& e)
 		entity->GetRender()->SpoonDraw(WindowRef);
 	}
 	
+	return true;
+}
+
+bool Application::OnWindowResize(WindowResizeEvent& e)
+{
 	return true;
 }
 

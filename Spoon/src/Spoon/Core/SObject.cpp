@@ -6,7 +6,7 @@ SObject::SObject()
 {
 	Render = ObjectRender::Create();
 	Render->RenderLocation = &ObjectLocation;
-	Render->Init();
+	Render->ObjectColor = &ObjectColor;
 }
 
 SObject::~SObject()
@@ -15,11 +15,13 @@ SObject::~SObject()
 }
 
 void SObject::BeginPlay()
-{}
+{
+	return;
+}
 
 void SObject::Tick(float DeltaTime)
 {
-	
+	return;
 }
 
 FVector2D SObject::GetLocation() const
@@ -30,4 +32,9 @@ FVector2D SObject::GetLocation() const
 void SObject::SetLocation(const FVector2D& loc)
 {
 	ObjectLocation = loc;
+}
+
+void SObject::SetColor(FColor color)
+{
+	ObjectColor = color;
 }

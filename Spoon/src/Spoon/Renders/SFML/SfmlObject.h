@@ -13,8 +13,6 @@ public:
 
 	void SpoonDraw(class Window* windowRef) override;
 
-	void Init() override;
-
 private:
 
 	sf::RectangleShape* shape;
