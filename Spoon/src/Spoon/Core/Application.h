@@ -22,6 +22,8 @@ public:
 
 	bool OnRender(class AppRenderEvent& e);
 
+	bool OnWindowResize(class WindowResizeEvent& e);
+
 	Level* GetWorld() const;
 
 private:

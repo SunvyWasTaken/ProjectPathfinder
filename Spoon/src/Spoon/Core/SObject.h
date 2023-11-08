@@ -23,9 +23,15 @@ public:
 
 	ObjectRender* GetRender() const { return Render; };
 
-protected:
+	void SetColor(FColor color);
+
+	FColor GetColor() const { return ObjectColor; };
+
+private:
 
 	FVector2D ObjectLocation;
+
+	FColor ObjectColor;
 
 	ObjectRender* Render;
 

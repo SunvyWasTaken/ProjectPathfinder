@@ -27,8 +27,15 @@ void SfmlWindow::OnUpdate()
 	{
 		HandleEvent(event);
 	}
+	// Tick 
+	AppTickEvent TickEvent;
+	EventCallBack(TickEvent);
+
+	// Puis render des items.
 	AppRenderEvent RenderEvent;
 	EventCallBack(RenderEvent);
+
+	// Enfin display them all.
 	WindowRef->display();
 }
 
@@ -66,7 +73,7 @@ void SfmlWindow::HandleEvent(sf::Event& event)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
-		KeyPressedEvent tmpevent(event.key.scancode);
+		KeyPressedEvent tmpevent(event.key.code);
 		EventCallBack(tmpevent);
 		return;
 	}
@@ -75,6 +82,11 @@ void SfmlWindow::HandleEvent(sf::Event& event)
 		WindowCloseEvent tmpevent;
 		EventCallBack(tmpevent);
 		return;
+	}
+	if (event.type == sf::Event::Resized)
+	{
+		WindowResizeEvent tmpevent(event.size.width, event.size.height);
+		EventCallBack(tmpevent);
 	}
 	// TODO mettre le reste des events qui pourrais servire ici.
 }

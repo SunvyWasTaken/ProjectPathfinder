@@ -11,7 +11,7 @@
 Application::Application()
 {
 	WindowRef = Window::Create();
-	WindowRef->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+	WindowRef->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
 	CurrentLevel = new Level();
 }
@@ -38,6 +38,7 @@ void Application::OnEvent(SpoonEvent& e)
 	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 	dispatcher.Dispatch<AppTickEvent>(BIND_EVENT_FN(Application::OnAppTick));
 	dispatcher.Dispatch<AppRenderEvent>(BIND_EVENT_FN(Application::OnRender));
+	dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 }
 
 bool Application::OnWindowClose(WindowCloseEvent& e)
@@ -68,6 +69,11 @@ bool Application::OnRender(AppRenderEvent& e)
 		entity->GetRender()->SpoonDraw(WindowRef);
 	}
 	
+	return true;
+}
+
+bool Application::OnWindowResize(WindowResizeEvent& e)
+{
 	return true;
 }
 
