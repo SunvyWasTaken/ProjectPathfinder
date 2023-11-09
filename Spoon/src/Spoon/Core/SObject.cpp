@@ -1,6 +1,6 @@
-#include "snpch.h"
 #include "SObject.h"
 #include "ObjectRender.h"
+#include "Level.h"
 
 SObject::SObject()
 {
@@ -11,6 +11,7 @@ SObject::SObject()
 
 SObject::~SObject()
 {
+	SetParent(nullptr);
 	delete Render;
 }
 
@@ -21,6 +22,11 @@ void SObject::BeginPlay()
 
 void SObject::Tick(float DeltaTime)
 {
+	CurrentTimeAlive += DeltaTime;
+	if (TimerDestroy <= CurrentTimeAlive)
+	{
+		DestroyObject();
+	}
 	return;
 }
 
@@ -34,7 +40,25 @@ void SObject::SetLocation(const FVector2D& loc)
 	ObjectLocation = loc;
 }
 
+void SObject::DestroyObject()
+{
+	delete this;
+}
+
 void SObject::SetColor(FColor color)
 {
 	ObjectColor = color;
+}
+
+void SObject::SetParent(Level* parentRef)
+{
+	if (WorldRef)
+	{
+		WorldRef->RemoveObject(this);
+	}
+	WorldRef = parentRef;
+	if (WorldRef)
+	{
+		WorldRef->AddObject(this);
+	}
 }

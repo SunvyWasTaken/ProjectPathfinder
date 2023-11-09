@@ -15,7 +15,7 @@ public:
 
 	virtual ~Level();
 
-	void UpdateEntity();
+	void UpdateEntity(double deltatime);
 
 	template<typename T>
 	__forceinline T* SpawnActor(FVector2D _location)
@@ -24,13 +24,19 @@ public:
 		if (tmp)
 		{
 			tmp->SetLocation(_location);
-			AddEntityList.push_back(tmp);
+			tmp->SetParent(this);
 		}
 		// Cast vide du coup c mort.
 		return tmp;
 	}
 
 	std::vector<SObject*> GetEntityList() const { return EntityList; }
+
+	void RemoveObject(class SObject* obj);
+
+	void AddObject(class SObject* obj);
+
+	void DestroyEntity(class SObject* obj);
 	
 protected:
 

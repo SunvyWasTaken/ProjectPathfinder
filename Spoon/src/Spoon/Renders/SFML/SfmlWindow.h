@@ -6,7 +6,7 @@
 
 namespace sf { class Shape; };
 
-class SPOON_API SfmlWindow : public Window
+class SfmlWindow : public Window
 {
 public:
 	SfmlWindow(const WindowsProps& props);
@@ -23,6 +23,8 @@ public:
 
 private:
 	
+	sf::Clock clock;
+
 	std::unique_ptr<sf::RenderWindow> WindowRef;
 	
 	virtual void Init(const WindowsProps& props);

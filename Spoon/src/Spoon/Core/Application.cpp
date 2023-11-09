@@ -68,7 +68,7 @@ bool Application::OnKeyPressed(KeyPressedEvent& e)
 
 bool Application::OnAppTick(AppTickEvent& e)
 {
-	CurrentLevel->UpdateEntity();
+	CurrentLevel->UpdateEntity(e.GetDeltaTime());
 	return true;
 }
 

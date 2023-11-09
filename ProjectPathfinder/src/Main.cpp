@@ -4,7 +4,7 @@
 class PathApp : public Application
 {
 public:
-	PathApp() : Application("Pathfinder", FVector2D(1920, 1080))
+	PathApp() : Application("Pathfinder", FVector2D(1280, 720))
 	{}
 };
 
