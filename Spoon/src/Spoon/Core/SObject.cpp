@@ -22,11 +22,6 @@ void SObject::BeginPlay()
 
 void SObject::Tick(float DeltaTime)
 {
-	CurrentTimeAlive += DeltaTime;
-	if (TimerDestroy <= CurrentTimeAlive)
-	{
-		DestroyObject();
-	}
 	return;
 }
 

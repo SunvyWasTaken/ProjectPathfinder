@@ -29,9 +29,9 @@ void SfmlWindow::OnUpdate()
 	}
 	// Tick
 	sf::Time time = clock.getElapsedTime();
+	clock.restart();
 	AppTickEvent TickEvent(time.asSeconds());
 	EventCallBack(TickEvent);
-	clock.restart();
 	// Puis render des items.
 	AppRenderEvent RenderEvent;
 	EventCallBack(RenderEvent);
