@@ -2,28 +2,22 @@
 #include "ObjectRender.h"
 #include "Level.h"
 
-SObject::SObject()
+SObject::SObject() : ObjectLocation(0, 0), ObjectSize(100, 100), ObjectColor(255, 255, 255, 255), WorldRef(nullptr)
 {
-	Render = ObjectRender::Create();
-	Render->RenderLocation = &ObjectLocation;
-	Render->ObjectColor = &ObjectColor;
+	Render = ObjectRender::Create(&ObjectLocation, &ObjectSize, &ObjectColor);
 }
 
 SObject::~SObject()
 {
-	SetParent(nullptr);
+	SetWorldRef(nullptr);
 	delete Render;
 }
 
 void SObject::BeginPlay()
-{
-	return;
-}
+{}
 
 void SObject::Tick(float DeltaTime)
-{
-	return;
-}
+{}
 
 FVector2D SObject::GetLocation() const
 {
@@ -45,7 +39,7 @@ void SObject::SetColor(FColor color)
 	ObjectColor = color;
 }
 
-void SObject::SetParent(Level* parentRef)
+void SObject::SetWorldRef(Level* parentRef)
 {
 	if (WorldRef)
 	{
@@ -56,4 +50,14 @@ void SObject::SetParent(Level* parentRef)
 	{
 		WorldRef->AddObject(this);
 	}
+}
+
+void SObject::SetSize(const FVector2D& size)
+{
+	ObjectSize = size;
+}
+
+FVector2D SObject::GetSize() const
+{
+	return ObjectSize;
 }

@@ -17,35 +17,75 @@ public:
 
 	virtual void Tick(float DeltaTime);
 
-	inline class Level* GetWorld() const { return WorldRef; };
-
-	FVector2D GetLocation() const;
-
-	void SetLocation(const FVector2D& loc);
-
 	void DestroyObject();
 
-	ObjectRender* GetRender() const { return Render; };
-
-	void SetColor(FColor color);
-
-	FColor GetColor() const { return ObjectColor; };
-
-	void SetParent(class Level* parentRef);
+#pragma region Location
 
 private:
 
 	FVector2D ObjectLocation;
 
-	FColor ObjectColor;
+public:
+
+	FVector2D GetLocation() const;
+
+	void SetLocation(const FVector2D& loc);
+
+#pragma endregion
+
+#pragma region Render
+
+private:
 
 	ObjectRender* Render;
 
+public:
+
+	ObjectRender* GetRender() const { return Render; };
+
+#pragma endregion
+
+#pragma region Color
+
+private:
+
+	FColor ObjectColor;
+
+public:
+
+	FColor GetColor() const { return ObjectColor; };
+
+	void SetColor(FColor color);
+
+#pragma endregion
+
+#pragma region World
+
+private:
+
 	class Level* WorldRef = nullptr;
 
-	float TimerDestroy = 5.f;
+public:
 
-	float CurrentTimeAlive = 0;
+	inline class Level* GetWorld() const { return WorldRef; };
+
+	void SetWorldRef(class Level* parentRef);
+
+#pragma endregion
+
+#pragma region Size
+
+private:
+
+	FVector2D ObjectSize;
+
+public:
+
+	void SetSize(const FVector2D& size);
+
+	FVector2D GetSize() const;
+
+#pragma endregion
 
 };
 

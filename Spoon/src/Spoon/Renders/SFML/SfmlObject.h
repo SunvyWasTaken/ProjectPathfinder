@@ -7,7 +7,7 @@ class SfmlRender : public ObjectRender
 {
 public:
 	
-	SfmlRender();
+	SfmlRender(FVector2D* loc, FVector2D* size, FColor* color);
 
 	virtual ~SfmlRender() { delete shape; };
 
