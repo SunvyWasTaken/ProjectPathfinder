@@ -4,7 +4,7 @@
 #include "SfmlWindow.h"
 #include "Spoon/Library/FMath.h"
 
-ObjectRender* ObjectRender::Create(FVector2D* loc = nullptr, FVector2D* size = nullptr, FColor* color = nullptr)
+ObjectRender* ObjectRender::Create(FVector2D* loc, FVector2D* size, FColor* color)
 {
 	return new SfmlRender(loc, size, color);
 }

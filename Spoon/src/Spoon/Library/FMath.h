@@ -1,9 +1,10 @@
 #pragma once
+#include "Spoon/Core/Core.h"
 
 #pragma region Vector
 
 template <typename T>
-struct Vector2D
+struct SPOON_API Vector2D
 {
 	T X;
 	T Y;

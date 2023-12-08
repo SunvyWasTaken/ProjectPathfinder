@@ -17,14 +17,14 @@ public:
 
 	void UpdateEntity(double deltatime);
 
-	template<typename T>
+	template<typename T = SObject>
 	__forceinline T* SpawnActor(FVector2D _location)
 	{
 		T* tmp = new T();
 		if (tmp)
 		{
 			tmp->SetLocation(_location);
-			tmp->SetParent(this);
+			tmp->SetWorldRef(this);
 		}
 		// Cast vide du coup c mort.
 		return tmp;
@@ -35,8 +35,6 @@ public:
 	void RemoveObject(class SObject* obj);
 
 	void AddObject(class SObject* obj);
-
-	void DestroyEntity(class SObject* obj);
 	
 protected:
 

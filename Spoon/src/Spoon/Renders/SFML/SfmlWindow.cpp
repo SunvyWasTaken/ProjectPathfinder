@@ -74,7 +74,7 @@ void SfmlWindow::HandleEvent(sf::Event& event)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
-		KeyPressedEvent tmpevent(event.key.code);
+		KeyPressedEvent tmpevent(event.key.scancode);
 		EventCallBack(tmpevent);
 		return;
 	}
