@@ -6,7 +6,7 @@ class SPOON_API SpoonText : public SWidget
 {
 public:
 	
-	SpoonText(SWidget* parent) : SWidget(parent) {};
+	explicit SpoonText(SWidget* parent) : SWidget(parent) {};
 
 	SpoonText(SWidget* parent, std::string text) : SWidget(parent) {};
 
