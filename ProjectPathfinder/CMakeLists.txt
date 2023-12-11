@@ -1,9 +1,24 @@
 ﻿project(ProjectPathfinder)
 
-set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/ProjectPathfinder/src")
-set(SOURCES
-	"${SOURCE_DIR}/main.cpp"
-)
+macro(GroupSources curdir)
+    file(GLOB children RELATIVE ${PROJECT_SOURCE_DIR}/${curdir}
+    ${PROJECT_SOURCE_DIR}/${curdir}/* ${PROJECT_SOURCE_DIR}/${curdir}/${curdir}/*)
+
+    foreach(child ${children})
+
+        if(IS_DIRECTORY ${PROJECT_SOURCE_DIR}/${curdir}/${child})
+            GroupSources(${curdir}/${child})
+        else()
+            string(REPLACE "/" "\\" groupname ${curdir})
+            # I would like to call the src root folder in a different name, only in visual studio (not mandatory requirement)
+            source_group(${groupname} FILES
+            ${PROJECT_SOURCE_DIR}/${curdir}/${child})
+        endif()
+    endforeach()
+endmacro()
+
+# Execute the macro
+GroupSources(src)
 
 find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
