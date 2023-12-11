@@ -5,8 +5,6 @@
 #include "Spoon/Events/ApplicationEvent.h"
 #include "Spoon/Renders/SFML/SfmlObject.h"
 
-#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
-
 Application::Application() : WindowName("Spoon Engine"), ScreenSize(FVector2D(1280, 720))
 {
 	Init();
@@ -41,14 +39,31 @@ void Application::Run()
 
 void Application::OnEvent(SpoonEvent& e)
 {
-	// Ici dfaire un event type pour les trier.
-		// call si l'event est window close.
 	EventDispatcher dispatcher(e);
 	dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(Application::OnKeyPressed));
 	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 	dispatcher.Dispatch<AppTickEvent>(BIND_EVENT_FN(Application::OnAppTick));
 	dispatcher.Dispatch<AppRenderEvent>(BIND_EVENT_FN(Application::OnRender));
 	dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
+
+	for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+	{
+		(*--it)->OnEvent(e);
+		if (e.Handle)
+			break;
+	}
+}
+
+void Application::PushOverlay(Layer* layer)
+{
+	m_LayerStack.PushLayer(layer);
+	layer->OnAttach();
+}
+
+void Application::PushLayer(Layer* layer)
+{
+	m_LayerStack.PushOverlay(layer);
+	layer->OnAttach();
 }
 
 bool Application::OnWindowClose(WindowCloseEvent& e)
