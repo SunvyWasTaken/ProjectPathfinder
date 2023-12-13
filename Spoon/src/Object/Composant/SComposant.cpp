@@ -21,6 +21,7 @@ void SComposant::OnUpdate()
 bool SComposant::RenderComposant(Window* window)
 {
 	Render->SpoonDraw(window);
+	return false;
 }
 
 bool const SComposant::IsInBound(const FVector2D& loc) const
