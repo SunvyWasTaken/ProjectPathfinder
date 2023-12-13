@@ -11,6 +11,8 @@ public:
 
 	virtual void OnEvent(SpoonEvent& event) override;
 
+	virtual void OnUpdate() override;
+
 private:
 	
 	std::vector<class SComposant*> ComposantList;

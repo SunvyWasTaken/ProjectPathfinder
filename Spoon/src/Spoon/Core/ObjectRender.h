@@ -19,6 +19,8 @@ public:
 		return (T*)Owner;
 	}
 
+	virtual void OnUpdate() = 0;
+
 private:
 
 	SObject* Owner;

@@ -12,6 +12,8 @@ public:
 
 	virtual void OnEvent(class SpoonEvent& event) {};
 
+	void OnUpdate();
+
 private:
 
 	class ObjectRender* Render;

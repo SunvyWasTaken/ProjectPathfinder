@@ -12,3 +12,11 @@ void SWidget::OnEvent(SpoonEvent& event)
 	}
 }
 
+void SWidget::OnUpdate()
+{
+	for (auto composant : ComposantList)
+	{
+		composant->OnUpdate();
+	}
+}
+

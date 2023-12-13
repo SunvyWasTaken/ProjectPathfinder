@@ -13,6 +13,11 @@ SComposant::~SComposant()
 	delete Render;
 }
 
+void SComposant::OnUpdate()
+{
+	Render->OnUpdate();
+}
+
 bool const SComposant::IsInBound(const FVector2D& loc) const
 {
 	const FVector2D halfSize = GetSize()/2;

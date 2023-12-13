@@ -2,6 +2,11 @@
 #include "Spoon/Events/MouseEvent.h"
 #include <snpch.h>
 
+SButton::SButton()
+{
+	SetSize(FVector2D(30, 60));
+}
+
 void SButton::OnEvent(SpoonEvent& event)
 {
 	EventDispatcher dispatcher(event);

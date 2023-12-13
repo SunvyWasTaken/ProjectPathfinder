@@ -5,6 +5,9 @@
 class SButton : public SComposant
 {
 public:
+
+	SButton();
+
 	virtual void OnEvent(class SpoonEvent& event) override;
 
 private:
