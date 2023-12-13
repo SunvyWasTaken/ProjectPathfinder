@@ -1,0 +1,1 @@
+#include "ObstacleSquare.h"
