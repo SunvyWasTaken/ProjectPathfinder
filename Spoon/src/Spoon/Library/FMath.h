@@ -32,12 +32,12 @@ struct SPOON_API Vector2D
 		return *this;
 	}
 
-	inline bool operator==(Vector2D<T>& _val)
+	inline bool operator==(Vector2D<T>& _val) const
 	{
 		return X == _val.X && Y == _val.Y;
 	}
 
-	inline bool operator!=(Vector2D<T>& _val)
+	inline bool operator!=(Vector2D<T>& _val) const
 	{
 		return !(*this == _val);
 	}
@@ -84,13 +84,13 @@ __forceinline Vector2D<T> operator-(Vector2D<T>& right, T& left)
 }
 
 template <typename T>
-__forceinline bool operator==(Vector2D<T>& left, Vector2D<T>& right)
+__forceinline bool const operator==(const Vector2D<T>& left, const Vector2D<T>& right)
 {
 	return left.X == right.X && left.Y == right.Y;
 }
 
 template <typename T>
-__forceinline bool operator!=(Vector2D<T>& left, Vector2D<T>& right)
+__forceinline bool const operator!=(const Vector2D<T>& left, const Vector2D<T>& right)
 {
 	return !(left == right);
 }
@@ -98,6 +98,8 @@ __forceinline bool operator!=(Vector2D<T>& left, Vector2D<T>& right)
 #pragma endregion
 
 #pragma endregion Vector
+
+
 
 #pragma region Color
 struct FColor

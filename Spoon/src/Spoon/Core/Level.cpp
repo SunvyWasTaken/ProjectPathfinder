@@ -31,7 +31,7 @@ void Level::UpdateEntity(double deltatime)
 	}
 }
 
-void Level::RemoveObject(SObject* obj)
+void Level::RemoveObject(SActor* obj)
 {
 	auto tmp = std::find(EntityList.begin(), EntityList.end(), obj);
 	if (tmp == EntityList.end())
@@ -42,7 +42,7 @@ void Level::RemoveObject(SObject* obj)
 	EntityList.erase(tmp);
 }
 
-void Level::AddObject(SObject* obj)
+void Level::AddObject(SActor* obj)
 {
 	if (!obj)
 	{

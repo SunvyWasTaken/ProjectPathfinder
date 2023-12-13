@@ -6,8 +6,10 @@
 #endif // SN_BUILD_DLL
 
 template <typename T> struct Vector2D;
-
 using FVector2D = Vector2D<float>;
+
+template <typename T> struct Transform;
+using FTransform = Transform<float>;
 
 struct FColor;
 

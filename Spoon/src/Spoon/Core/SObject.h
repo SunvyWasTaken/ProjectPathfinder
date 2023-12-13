@@ -13,17 +13,13 @@ public:
 
 	virtual ~SObject();
 
-	virtual void BeginPlay();
+	virtual void BeginPlay() = 0;
 
-	virtual void Tick(float DeltaTime);
+	virtual void Tick(float DeltaTime) = 0;
 
-	void DestroyObject();
+protected:
 
-#pragma region Location
-
-private:
-
-	FVector2D ObjectLocation;
+	FTransform ObjectTransform;
 
 public:
 
@@ -31,61 +27,13 @@ public:
 
 	void SetLocation(const FVector2D& loc);
 
-#pragma endregion
-
-#pragma region Render
-
-private:
-
-	ObjectRender* Render;
-
-public:
-
-	ObjectRender* GetRender() const { return Render; };
-
-#pragma endregion
-
-#pragma region Color
-
-private:
-
-	FColor ObjectColor;
-
-public:
-
-	FColor GetColor() const { return ObjectColor; };
-
-	void SetColor(FColor color);
-
-#pragma endregion
-
-#pragma region World
-
-private:
-
-	class Level* WorldRef = nullptr;
-
-public:
-
-	inline class Level* GetWorld() const { return WorldRef; };
-
-	void SetWorldRef(class Level* parentRef);
-
-#pragma endregion
-
-#pragma region Size
-
-private:
-
-	FVector2D ObjectSize;
-
-public:
+	FVector2D GetSize() const;
 
 	void SetSize(const FVector2D& size);
 
-	FVector2D GetSize() const;
+	FTransform GetTransform() const;
 
-#pragma endregion
+	void SetTransform(const FTransform& transform);
 
 };
 
