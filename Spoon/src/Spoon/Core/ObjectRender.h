@@ -5,13 +5,13 @@ class SPOON_API ObjectRender : public SObject
 {
 public:
 
-	ObjectRender(SObject* owner, const FColor& color);
+	ObjectRender(SObject* owner, FColor* color);
 
 	virtual ~ObjectRender();
 
 	virtual void SpoonDraw(class Window* windowRef) = 0;
 
-	static ObjectRender* Create(SObject* owner, const FColor& color);
+	static ObjectRender* Create(SObject* owner, FColor* color);
 
 	template <typename T = SObject>
 	T* GetOwner()
@@ -27,6 +27,6 @@ private:
 
 protected:
 
-	FColor ObjectColor;
+	FColor* ObjectColor;
 
 };

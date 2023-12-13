@@ -7,7 +7,7 @@ class SfmlRender : public ObjectRender
 {
 public:
 	
-	SfmlRender(SObject* owner, const FColor& color);
+	SfmlRender(SObject* owner, FColor* color);
 
 	virtual ~SfmlRender() { delete shape; };
 

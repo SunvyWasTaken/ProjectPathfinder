@@ -2,13 +2,19 @@
 
 #include "SComposant.h"
 
-class SButton : public SComposant
+class SPOON_API SButton : public SComposant
 {
 public:
 
-	SButton();
+	SButton(class SComposant* owner = nullptr);
+
+	virtual ~SButton();
 
 	virtual void OnEvent(class SpoonEvent& event) override;
+
+	virtual void OnUpdate() override;
+
+	void AddChild(SComposant* _child);
 
 private:
 
@@ -21,6 +27,8 @@ private:
 	bool bIsHover = false;
 
 	bool bIsPressed = false;
+
+	SComposant* Child = nullptr;
 
 protected:
 

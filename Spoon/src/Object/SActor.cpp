@@ -6,7 +6,7 @@
 SActor::SActor() : 
 	SObject(),
 	ObjectColor(255, 255, 255, 255),
-	Render(ObjectRender::Create(this, ObjectColor)),
+	Render(ObjectRender::Create(this, &ObjectColor)),
 	WorldRef(nullptr)
 {}
 

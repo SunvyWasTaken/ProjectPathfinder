@@ -15,6 +15,8 @@ public:
 
 	virtual void Render(class Window* window);
 
+	void AddComposant(class SComposant* compo);
+
 private:
 	
 	std::vector<class SComposant*> ComposantList;

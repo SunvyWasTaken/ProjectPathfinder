@@ -28,3 +28,8 @@ void SWidget::Render(Window* window)
 	}
 }
 
+void SWidget::AddComposant(SComposant* compo)
+{
+	ComposantList.push_back(compo);
+}
+

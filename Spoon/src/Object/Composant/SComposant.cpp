@@ -3,19 +3,15 @@
 #include "Spoon/Core/ObjectRender.h"
 #include <snpch.h>
 
-SComposant::SComposant() : 
-	SObject(), 
-	Render(ObjectRender::Create(this, ObjectColor))
+SComposant::SComposant(SComposant* owner) : 
+	SObject(),
+	Owner(owner),
+	Render(ObjectRender::Create((Owner ? Owner : this), &ObjectColor))
 {}
 
 SComposant::~SComposant()
 {
 	delete Render;
-}
-
-void SComposant::OnUpdate()
-{
-	Render->OnUpdate();
 }
 
 bool SComposant::RenderComposant(Window* window)
