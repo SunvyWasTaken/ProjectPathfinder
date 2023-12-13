@@ -4,15 +4,15 @@
 #include "SfmlWindow.h"
 #include "Spoon/Library/FMath.h"
 
-ObjectRender* ObjectRender::Create(FVector2D* loc, FVector2D* size, FColor* color)
+ObjectRender* ObjectRender::Create(SObject* owner, const FColor& color)
 {
-	return new SfmlRender(loc, size, color);
+	return new SfmlRender(owner, color);
 }
 
-SfmlRender::SfmlRender(FVector2D* loc, FVector2D* size, FColor* color) : ObjectRender(loc, size, color), shape(new sf::RectangleShape(sf::Vector2f(size->X, size->Y)))
+SfmlRender::SfmlRender(SObject* owner, const FColor& color) : ObjectRender(owner, color), shape(new sf::RectangleShape(sf::Vector2f(ObjectTransform.Size.X, ObjectTransform.Size.Y)))
 {
-	shape->setFillColor(sf::Color(ObjectColor->R, ObjectColor->G, ObjectColor->B, ObjectColor->A));
-	shape->setPosition(RenderLocation->X, RenderLocation->Y);
+	shape->setFillColor(sf::Color(ObjectColor.R, ObjectColor.G, ObjectColor.B, ObjectColor.A));
+	shape->setPosition(ObjectTransform.Location.X, ObjectTransform.Location.Y);
 }
 
 void SfmlRender::SpoonDraw(class Window* windowRef)

@@ -53,11 +53,17 @@ void Application::OnEvent(SpoonEvent& e)
 	}
 
 	dispatcher.Dispatch<AppTickEvent>(BIND_EVENT_FN(Application::OnAppTick));
+	if(e.Handle)
+		return;
 	dispatcher.Dispatch<AppRenderEvent>(BIND_EVENT_FN(Application::OnRender));
+	if (e.Handle)
+		return;
 	dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(Application::OnKeyPressed));
+	if (e.Handle)
+		return;
 	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
-	dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
-
+	if (e.Handle)
+		return;
 }
 
 void Application::PushOverlay(Layer* layer)

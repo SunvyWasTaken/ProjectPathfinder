@@ -2,14 +2,13 @@
 #include "SWidget.h"
 #include "Spoon/Events/SpoonEvent.h"
 #include "Spoon/Events/MouseEvent.h"
+#include "Composant/SComposant.h"
 
 void SWidget::OnEvent(SpoonEvent& event)
 {
-	EventDispatcher dispatcher(event);
-	dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_FN(SWidget::OnMouseEvent));
+	for (auto composant : ComposantList)
+	{
+		composant->OnEvent(event);
+	}
 }
 
-bool SWidget::OnMouseEvent(MouseMovedEvent& mouseMoved)
-{
-	return false;
-}
