@@ -5,10 +5,6 @@
 class SfmlText : public SpoonText
 {
 public:
-	
-	SfmlText(SWidget* parent) : SpoonText(parent) { SetString("TextBlock"); };
-
-	SfmlText(SWidget* parent, std::string text) : SpoonText(parent, text) { SetString(text); };
 
 	virtual std::string GetString() const override;
 

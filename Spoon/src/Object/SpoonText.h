@@ -6,13 +6,7 @@ class SPOON_API SpoonText : public SWidget
 {
 public:
 	
-	explicit SpoonText(SWidget* parent) : SWidget(parent) {};
-
-	SpoonText(SWidget* parent, std::string text) : SWidget(parent) {};
-
 	virtual ~SpoonText() {};
-
-	static SpoonText* Create(SWidget* parent = nullptr);
 
 	virtual std::string GetString() const = 0;
 

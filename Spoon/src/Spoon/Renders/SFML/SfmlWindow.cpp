@@ -1,6 +1,7 @@
 #include "SfmlWindow.h"
 #include "Spoon/Events/KeyEvent.h"
 #include "Spoon/Events/ApplicationEvent.h"
+#include "Spoon/Events/MouseEvent.h"
 
 // Function call de maniere indirect lorsque j'ai besoin de la fenetre.
 Window* Window::Create(const WindowsProps& props)
@@ -87,6 +88,21 @@ void SfmlWindow::HandleEvent(sf::Event& event)
 	if (event.type == sf::Event::Resized)
 	{
 		WindowResizeEvent tmpevent(event.size.width, event.size.height);
+		EventCallBack(tmpevent);
+	}
+	if (event.type == sf::Event::MouseMoved)
+	{
+		MouseMovedEvent tmpevent(event.mouseMove.x, event.mouseMove.y);
+		EventCallBack(tmpevent);
+	}
+	if (event.type == sf::Event::MouseButtonPressed)
+	{
+		MouseButtonPressedEvent tmpevent(event.mouseButton.button);
+		EventCallBack(tmpevent);
+	}
+	if (event.type == sf::Event::MouseButtonReleased)
+	{
+		MouseButtonReleasedEvent tmpevent(event.mouseButton.button);
 		EventCallBack(tmpevent);
 	}
 	// TODO mettre le reste des events qui pourrais servire ici.
