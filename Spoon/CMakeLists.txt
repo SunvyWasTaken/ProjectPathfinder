@@ -48,14 +48,14 @@ target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-network sfml-grap
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${SOURCE_FILES})
 
-set(PROJECT_TARGET ProjectPathfinder)
+#set(PROJECT_TARGET "ProjectPathfinder")
 
-set(CMAKE_BUILD_TYPE Debug)
+#set(CMAKE_BUILD_TYPE "Debug")
 
-set(TARGET_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}.dll)
-set(TARGET_FILE_DIR ${CMAKE_BINARY_DIR}/${PROJECT_TARGET}/${CMAKE_BUILD_TYPE}/)
+#set(TARGET_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}.dll)
+#set(TARGET_FILE_DIR ${CMAKE_BINARY_DIR}/${PROJECT_TARGET}/${CMAKE_BUILD_TYPE})
 
-message("Target file : ${TARGET_FILE}")
-message("Target files dir : ${TARGET_FILE_DIR}")
+#message("Target file : ${TARGET_FILE}")
+#message("Target files dir : ${TARGET_FILE_DIR}")
 
-add_custom_command(TARGET Spoon POST_BUILD  COMMAND ${CMAKE_COMMAND} -E copy ${TARGET_FILE} ${TARGET_FILE_DIR} COMMAND_EXPAND_LISTS  )
+#add_custom_command(TARGET Spoon POST_BUILD  COMMAND ${CMAKE_COMMAND} -E copy ${TARGET_FILE} ${TARGET_FILE_DIR} COMMAND_EXPAND_LISTS  )

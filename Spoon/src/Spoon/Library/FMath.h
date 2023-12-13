@@ -1,9 +1,10 @@
 #pragma once
+#include "Spoon/Core/Core.h"
 
 #pragma region Vector
 
 template <typename T>
-struct Vector2D
+struct SPOON_API Vector2D
 {
 	T X;
 	T Y;
@@ -19,18 +20,29 @@ struct Vector2D
 
 	// Operator
 #pragma region Operator
-	Vector2D<T> operator+=(Vector2D<T> _val)
+	inline Vector2D<T> operator+=(Vector2D<T>& _val)
 	{
 		X += _val.X; Y += _val.Y;
 		return *this;
 	}
 
-	Vector2D<T> operator-=(Vector2D<T> _val)
+	inline Vector2D<T> operator-=(Vector2D<T>& _val)
 	{
 		X -= _val.X; Y -= _val.Y;
 		return *this;
 	}
-#pragma endregion
+
+	inline bool operator==(Vector2D<T>& _val) const
+	{
+		return (X == _val.X) && (Y == _val.Y);
+	}
+
+	inline bool operator!=(Vector2D<T>& _val) const
+	{
+		return !(*this == _val);
+	}
+
+#pragma endregion // Operator
 
 	// Math function
 #pragma region BasicMath
@@ -71,9 +83,23 @@ __forceinline Vector2D<T> operator-(Vector2D<T>& right, T& left)
 	return Vector2D<T>(right.X - left, right.Y - left);
 }
 
+template <typename T>
+__forceinline bool const operator==(const Vector2D<T>& left, const Vector2D<T>& right)
+{
+	return (left.X == right.X) && (left.Y == right.Y);
+}
+
+template <typename T>
+__forceinline bool const operator!=(const Vector2D<T>& left, const Vector2D<T>& right)
+{
+	return !(left == right);
+}
+
 #pragma endregion
 
 #pragma endregion Vector
+
+
 
 #pragma region Color
 struct FColor
