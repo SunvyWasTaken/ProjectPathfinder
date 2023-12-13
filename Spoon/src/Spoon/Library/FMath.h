@@ -34,7 +34,7 @@ struct SPOON_API Vector2D
 
 	inline bool operator==(Vector2D<T>& _val) const
 	{
-		return X == _val.X && Y == _val.Y;
+		return (X == _val.X) && (Y == _val.Y);
 	}
 
 	inline bool operator!=(Vector2D<T>& _val) const
@@ -86,7 +86,7 @@ __forceinline Vector2D<T> operator-(Vector2D<T>& right, T& left)
 template <typename T>
 __forceinline bool const operator==(const Vector2D<T>& left, const Vector2D<T>& right)
 {
-	return left.X == right.X && left.Y == right.Y;
+	return (left.X == right.X) && (left.Y == right.Y);
 }
 
 template <typename T>
