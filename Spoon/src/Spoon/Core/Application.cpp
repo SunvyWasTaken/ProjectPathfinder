@@ -101,6 +101,10 @@ bool Application::OnAppTick(AppTickEvent& e)
 
 bool Application::OnRender(AppRenderEvent& e)
 {
+	for (auto layout : m_LayerStack)
+	{
+		layout->Render(WindowRef);
+	}
 	for (auto entity : CurrentLevel->GetEntityList())
 	{
 		entity->GetRender()->SpoonDraw(WindowRef);

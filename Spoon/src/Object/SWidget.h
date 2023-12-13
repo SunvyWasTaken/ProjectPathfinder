@@ -13,6 +13,8 @@ public:
 
 	virtual void OnUpdate() override;
 
+	virtual void Render(class Window* window);
+
 private:
 	
 	std::vector<class SComposant*> ComposantList;

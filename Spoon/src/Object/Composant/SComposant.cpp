@@ -18,6 +18,11 @@ void SComposant::OnUpdate()
 	Render->OnUpdate();
 }
 
+bool SComposant::RenderComposant(Window* window)
+{
+	Render->SpoonDraw(window);
+}
+
 bool const SComposant::IsInBound(const FVector2D& loc) const
 {
 	const FVector2D halfSize = GetSize()/2;

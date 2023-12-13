@@ -77,30 +77,28 @@ void SfmlWindow::HandleEvent(sf::Event& event)
 	{
 		KeyPressedEvent tmpevent(event.key.scancode);
 		EventCallBack(tmpevent);
-		return;
 	}
-	if (event.type == sf::Event::Closed)
+	else if (event.type == sf::Event::Closed)
 	{
 		WindowCloseEvent tmpevent;
 		EventCallBack(tmpevent);
-		return;
 	}
-	if (event.type == sf::Event::Resized)
+	else if (event.type == sf::Event::Resized)
 	{
 		WindowResizeEvent tmpevent(event.size.width, event.size.height);
 		EventCallBack(tmpevent);
 	}
-	if (event.type == sf::Event::MouseMoved)
+	else if (event.type == sf::Event::MouseMoved)
 	{
 		MouseMovedEvent tmpevent(event.mouseMove.x, event.mouseMove.y);
 		EventCallBack(tmpevent);
 	}
-	if (event.type == sf::Event::MouseButtonPressed)
+	else if (event.type == sf::Event::MouseButtonPressed)
 	{
 		MouseButtonPressedEvent tmpevent(event.mouseButton.button);
 		EventCallBack(tmpevent);
 	}
-	if (event.type == sf::Event::MouseButtonReleased)
+	else if (event.type == sf::Event::MouseButtonReleased)
 	{
 		MouseButtonReleasedEvent tmpevent(event.mouseButton.button);
 		EventCallBack(tmpevent);

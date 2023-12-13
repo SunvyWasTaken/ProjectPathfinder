@@ -10,11 +10,13 @@ public:
 	SComposant();
 	virtual ~SComposant();
 
-	virtual void OnEvent(class SpoonEvent& event) {};
+	virtual void OnEvent(class SpoonEvent& event) = 0;
 
 	void OnUpdate();
 
 private:
+
+	bool RenderComposant(class Window* window);
 
 	class ObjectRender* Render;
 

@@ -9,6 +9,7 @@ SButton::SButton()
 
 void SButton::OnEvent(SpoonEvent& event)
 {
+	SComposant::OnEvent(event);
 	EventDispatcher dispatcher(event);
 	dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_FN(SButton::OnMouseMoved));
 	dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_FN(SButton::OnMousePressed));
