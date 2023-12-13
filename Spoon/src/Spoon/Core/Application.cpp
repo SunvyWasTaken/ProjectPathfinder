@@ -33,6 +33,10 @@ void Application::Run()
 {
 	while (bIsRunning)
 	{
+		for (Layer* layer : m_LayerStack)
+		{
+			layer->OnUpdate();
+		}
 		WindowRef->OnUpdate();
 	}
 }
@@ -40,11 +44,6 @@ void Application::Run()
 void Application::OnEvent(SpoonEvent& e)
 {
 	EventDispatcher dispatcher(e);
-	dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(Application::OnKeyPressed));
-	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
-	dispatcher.Dispatch<AppTickEvent>(BIND_EVENT_FN(Application::OnAppTick));
-	dispatcher.Dispatch<AppRenderEvent>(BIND_EVENT_FN(Application::OnRender));
-	dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 
 	for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 	{
@@ -52,6 +51,13 @@ void Application::OnEvent(SpoonEvent& e)
 		if (e.Handle)
 			break;
 	}
+
+	dispatcher.Dispatch<AppTickEvent>(BIND_EVENT_FN(Application::OnAppTick));
+	dispatcher.Dispatch<AppRenderEvent>(BIND_EVENT_FN(Application::OnRender));
+	dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(Application::OnKeyPressed));
+	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+	dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
+
 }
 
 void Application::PushOverlay(Layer* layer)
