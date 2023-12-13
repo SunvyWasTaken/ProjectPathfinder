@@ -1,6 +1,6 @@
 #pragma once
 #include "Core.h"
-#include "Spoon/Library/FMath.h"
+#include <snpch.h>
 
 class ObjectRender;
 
@@ -13,27 +13,27 @@ public:
 
 	virtual ~SObject();
 
-	virtual void BeginPlay();
+	virtual void BeginPlay() = 0;
 
-	virtual void Tick(float DeltaTime);
+	virtual void Tick(float DeltaTime) = 0;
+
+protected:
+
+	FTransform ObjectTransform;
+
+public:
 
 	FVector2D GetLocation() const;
 
 	void SetLocation(const FVector2D& loc);
 
-	ObjectRender* GetRender() const { return Render; };
+	FVector2D GetSize() const;
 
-	void SetColor(FColor color);
+	void SetSize(const FVector2D& size);
 
-	FColor GetColor() const { return ObjectColor; };
+	FTransform GetTransform() const;
 
-private:
-
-	FVector2D ObjectLocation;
-
-	FColor ObjectColor;
-
-	ObjectRender* Render;
+	void SetTransform(const FTransform& transform);
 
 };
 

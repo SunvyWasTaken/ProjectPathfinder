@@ -15,3 +15,4 @@
 #include <assert.h>
 
 #include "Spoon/Library/FMath.h"
+#include "Spoon/Library/TStruct.h"
