@@ -4,7 +4,7 @@
 
 AStar::AStar()
 {
-	//Open Is green, close is red and path is blue
+	//Open Is green, close is red, path is White and obstacle is Grey
 	OpenColor = FColor(0, 255, 0, 255);
 	CloseColor = FColor(255, 0, 0, 255);
 	PathColor = FColor(255, 255, 255, 255);
@@ -30,8 +30,8 @@ AStar::~AStar()
 void AStar::Tick(float Deltatime)
 {
 	SActor::Tick(Deltatime);
-	//std::cout << OpenList.size() << std::endl;
-	Search();
+	if(!bIsPathFound)
+		Search();
 }
 
 std::vector<SNode*> AStar::Search()
@@ -73,6 +73,7 @@ std::vector<SNode*> AStar::Search()
 			for (auto tile : Path)
 				tile->SetColor(PathColor);
 			StartNode->SetColor(PathColor);
+			bIsPathFound = true;
 			return Path;
 		}
 

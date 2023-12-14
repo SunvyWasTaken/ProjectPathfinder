@@ -21,9 +21,11 @@ public:
 	std::vector<SNode*> OpenList;
 	std::vector<SNode*> CloseList;
 	std::vector<SNode*> Path;
+	std::vector<SNode*> Obstacles;
 	SNode* StartNode;
 	SNode* DestinationNode;
 	bool bCanDiag = false;
+	bool bIsPathFound = false;
 
 	FColor OpenColor;
 	FColor CloseColor;

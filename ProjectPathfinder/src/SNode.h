@@ -8,6 +8,9 @@ public:
 	SNode();
 	virtual ~SNode();
 
+	int x;
+	int y;
+
 	int GScore = 0;
 	int HScore = 0;
 	int FScore = GScore + HScore;
@@ -16,8 +19,8 @@ public:
 	void SetHScore(int newH);
 	int GetDistance(SNode* target);
 	void SetConnection(SNode* connection);
-	void AddNeighbour(std::vector<SNode*> Grid, int ID);
-	void heuristic(SNode* neighbour, SNode* destination);
+	void AddNeighbour(std::vector<SNode*> Grid, int col, int row, int ID);
+	void SetWalkable(bool isSpecialNode);
 
 	bool bIsWalkable = true;
 	std::vector<SNode*> Neighbours;
