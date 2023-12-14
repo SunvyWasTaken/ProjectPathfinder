@@ -22,6 +22,7 @@ public:
 	void AddNeighbour(std::vector<SNode*> Grid, int col, int row, int ID);
 	void SetWalkable(bool isSpecialNode);
 
+	bool bCanDiag = false;
 	bool bIsWalkable = true;
 	std::vector<SNode*> Neighbours;
 	SNode* Connection = nullptr;

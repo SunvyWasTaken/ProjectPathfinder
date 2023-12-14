@@ -24,8 +24,8 @@ public:
 	std::vector<SNode*> Obstacles;
 	SNode* StartNode;
 	SNode* DestinationNode;
-	bool bCanDiag = false;
 	bool bIsPathFound = false;
+	int Iterator = 0;
 
 	FColor OpenColor;
 	FColor CloseColor;
