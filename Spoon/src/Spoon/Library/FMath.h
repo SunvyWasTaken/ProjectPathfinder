@@ -1,4 +1,5 @@
 #pragma once
+#include "snpch.h"
 
 #pragma region Vector
 
