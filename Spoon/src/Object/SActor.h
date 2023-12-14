@@ -9,11 +9,13 @@ public:
 
 	virtual ~SActor();
 
-	virtual void BeginPlay() override;
+	virtual void BeginPlay();
 
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime);
 
 	void DestroyActor();
+
+	void OnEvent(class SpoonEvent* event);
 
 #pragma region Render
 

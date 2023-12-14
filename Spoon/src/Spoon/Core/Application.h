@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 #include "LayerStack.h"
+#include "Object/SWidget.h"
 #include <snpch.h>
 
 class Level;
@@ -26,7 +27,11 @@ public:
 	void PushOverlay(Layer* layer);
 	void PushLayer(Layer* layer);
 
+	class SWidget* GetLayerOverlay() const { return m_LayerOverlay; }
+
 	Level* GetWorld() const;
+
+	__forceinline static Application& Get() { return *s_Instance; }
 
 private:
 
@@ -55,4 +60,22 @@ private:
 
 	LayerStack m_LayerStack;
 
+	class SWidget* m_LayerOverlay;
+
+
+	static Application* s_Instance;
+
 };
+
+Application* CreateApplication();
+
+template <typename TWidget = class SComposant>
+static TWidget* CreateWidget(class SComposant* owner = nullptr)
+{
+	TWidget* tmp = new TWidget(owner);
+
+	if(tmp && !owner)
+		Application::Get().GetLayerOverlay()->AddComposant(tmp);
+
+	return tmp;
+}
