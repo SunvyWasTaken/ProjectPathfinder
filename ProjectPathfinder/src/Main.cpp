@@ -8,10 +8,18 @@ public:
 	{}
 };
 
+Application* CreateApplication()
+{
+	return new PathApp();
+}
+
 
 int main()
 {
-	auto* app = new PathApp();	
+	auto* app = CreateApplication();
+	SButton* butt = CreateWidget<SButton>();
+	butt->SetColor(FColor(255));
+	butt->SetLocation(FVector2D(1280 / 2, 720 / 2));
 	app->Run();
 	delete app;
 

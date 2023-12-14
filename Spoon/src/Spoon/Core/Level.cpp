@@ -7,12 +7,12 @@ Level::~Level()
 	auto ListObj = AddEntityList;
 	for (auto& obj : ListObj)
 	{
-		delete obj;
+		obj->DestroyActor();
 	}
 	auto ListObject = EntityList;
 	for (auto& object : ListObject)
 	{
-		delete object;
+		object->DestroyActor();
 	}
 }
 

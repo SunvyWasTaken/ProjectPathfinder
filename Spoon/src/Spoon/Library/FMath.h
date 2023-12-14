@@ -1,5 +1,6 @@
 #pragma once
 #include "Spoon/Core/Core.h"
+#include <snpch.h>
 
 #pragma region Vector
 
@@ -77,10 +78,16 @@ __forceinline Vector2D<T> operator-(Vector2D<T>& right, Vector2D<T>& left)
 	return Vector2D<T>(right.X - left.X, right.Y - left.Y);
 }
 
-template <typename T>
-__forceinline Vector2D<T> operator-(Vector2D<T>& right, T& left)
+template <typename T, typename L = T>
+__forceinline Vector2D<T> operator-(Vector2D<T>& right, const L& left)
 {
 	return Vector2D<T>(right.X - left, right.Y - left);
+}
+
+template <typename T, typename L = T>
+__forceinline Vector2D<T> operator/(const Vector2D<T>& right, const L& left)
+{
+	return Vector2D<T>(right.X/left, right.Y/left);
 }
 
 template <typename T>

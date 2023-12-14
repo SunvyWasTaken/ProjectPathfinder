@@ -14,6 +14,8 @@ public:
 	virtual void OnUpdate() {}
 	virtual void OnEvent(SpoonEvent& event) {}
 
+	virtual void Render(class Window* window) = 0;
+
 
 	// Partie pour pouvoir print dans le Debug.
 	inline const std::string& GetName() const { return m_DebugName; };

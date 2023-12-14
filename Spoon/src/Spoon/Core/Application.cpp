@@ -5,13 +5,19 @@
 #include "Spoon/Events/ApplicationEvent.h"
 #include "Spoon/Renders/SFML/SfmlObject.h"
 
+#include "Object/SWidget.h"
+
+Application* Application::s_Instance = nullptr;
+
 Application::Application() : WindowName("Spoon Engine"), ScreenSize(FVector2D(1280, 720))
 {
+	s_Instance = this;
 	Init();
 }
 
 Application::Application(std::string windowName, FVector2D screensize) : WindowName(windowName), ScreenSize(screensize)
 {
+	s_Instance = this;
 	Init();
 }
 
@@ -27,10 +33,13 @@ void Application::Init()
 	WindowRef->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
 	CurrentLevel = new Level();
+
+	m_LayerOverlay = new SWidget();
 }
 
 void Application::Run()
 {
+	PushOverlay(m_LayerOverlay);
 	while (bIsRunning)
 	{
 		for (Layer* layer : m_LayerStack)
@@ -53,10 +62,12 @@ void Application::OnEvent(SpoonEvent& e)
 	}
 
 	dispatcher.Dispatch<AppTickEvent>(BIND_EVENT_FN(Application::OnAppTick));
+
 	dispatcher.Dispatch<AppRenderEvent>(BIND_EVENT_FN(Application::OnRender));
+
 	dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(Application::OnKeyPressed));
+
 	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
-	dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 
 }
 
@@ -95,6 +106,10 @@ bool Application::OnAppTick(AppTickEvent& e)
 
 bool Application::OnRender(AppRenderEvent& e)
 {
+	for (auto layout : m_LayerStack)
+	{
+		layout->Render(WindowRef);
+	}
 	for (auto entity : CurrentLevel->GetEntityList())
 	{
 		entity->GetRender()->SpoonDraw(WindowRef);
