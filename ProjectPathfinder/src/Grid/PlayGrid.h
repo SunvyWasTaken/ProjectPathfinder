@@ -1,7 +1,7 @@
 #pragma once
 #include "Spoon.h"
 
-class GridSquare;
+#include "GridSquare/GridSquare.h"
 
 class PlayGrid : public SActor
 {
@@ -10,9 +10,9 @@ public:
     virtual ~PlayGrid();
 
     GridSquare& getAt(unsigned int x, unsigned int y) const;
-    GridSquareCollection getNeighbors(const GridSquare&) const;
+    GridSquare::GridSquareCollection getNeighbors(const GridSquare&) const;
 
-    GridSquareCollection GridSquares;
+    GridSquare::GridSquareCollection GridSquares;
     unsigned int width;
 };
 

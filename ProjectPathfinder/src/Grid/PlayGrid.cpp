@@ -24,3 +24,8 @@ GridSquare& PlayGrid::getAt(unsigned int x, unsigned int y) const
 	unsigned int index = x + (width * y);
 	return *GridSquares[index];
 }
+
+GridSquare::GridSquareCollection PlayGrid::getNeighbors(const GridSquare&) const
+{
+	return GridSquare::GridSquareCollection();
+}

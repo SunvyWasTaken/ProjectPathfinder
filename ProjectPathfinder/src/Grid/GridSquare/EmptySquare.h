@@ -7,7 +7,7 @@ public:
     EmptySquare() : visitedCount(0), GridSquare() {};
     EmptySquare(PlayGrid& grid) : visitedCount(0), GridSquare(grid) {};
 
-    GridSquareCollection GetNeighbors() override;
+    GridSquare::GridSquareCollection GetNeighbors() override;
 
     unsigned int visitedCount;
 };
