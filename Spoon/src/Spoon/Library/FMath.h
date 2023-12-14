@@ -61,25 +61,25 @@ struct SPOON_API Vector2D
 
 #pragma region Operator Copy
 template <typename T>
-__forceinline Vector2D<T> operator+(Vector2D<T>& right, Vector2D<T>& left)
+__forceinline Vector2D<T> operator+(const Vector2D<T>& right, const Vector2D<T>& left)
 {
 	return Vector2D<T>(right.X + left.X, right.Y + left.Y);
 }
 
 template <typename T>
-__forceinline Vector2D<T> operator+(Vector2D<T>& right, T& left)
+__forceinline Vector2D<T> operator+(const Vector2D<T>& right, const T& left)
 {
 	return Vector2D<T>(right.X + left, right.Y + left);
 }
 
 template <typename T>
-__forceinline Vector2D<T> operator-(Vector2D<T>& right, Vector2D<T>& left)
+__forceinline Vector2D<T> operator-(const Vector2D<T>& right, const Vector2D<T>& left)
 {
 	return Vector2D<T>(right.X - left.X, right.Y - left.Y);
 }
 
 template <typename T, typename L = T>
-__forceinline Vector2D<T> operator-(Vector2D<T>& right, const L& left)
+__forceinline Vector2D<T> operator-(const Vector2D<T>& right, const L& left)
 {
 	return Vector2D<T>(right.X - left, right.Y - left);
 }
@@ -100,6 +100,24 @@ template <typename T>
 __forceinline bool const operator!=(const Vector2D<T>& left, const Vector2D<T>& right)
 {
 	return !(left == right);
+}
+
+template <typename T>
+__forceinline bool const operator<=(const Vector2D<T>& left, const Vector2D<T>& right)
+{
+	return left.X <= right.X && left.Y <= right.Y;
+}
+
+template <typename T>
+__forceinline bool const operator>=(const Vector2D<T>& left, const Vector2D<T>& right)
+{
+	return (right<=left);
+}
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const Vector2D<T>& var)
+{
+	return os << "X : " << var.X << ", Y : " << var.Y;
 }
 
 #pragma endregion

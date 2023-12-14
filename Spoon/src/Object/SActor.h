@@ -2,7 +2,7 @@
 
 #include "Spoon/Core/SObject.h"
 
-class SActor : public SObject
+class SPOON_API SActor : public SObject
 {
 public:
 	SActor();
@@ -15,7 +15,7 @@ public:
 
 	void DestroyActor();
 
-	void OnEvent(class SpoonEvent* event);
+	void OnEvent(class SpoonEvent& event);
 
 #pragma region Render
 
@@ -55,6 +55,5 @@ public:
 
 	void SetWorldRef(class Level* parentRef);
 
-#pragma endregion
 };
 

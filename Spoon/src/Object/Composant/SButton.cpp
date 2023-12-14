@@ -41,6 +41,7 @@ void SButton::AddChild(SComposant* _child)
 bool SButton::OnMouseMoved(MouseMovedEvent& event)
 {
 	const FVector2D mousePosition(event.GetX(), event.GetY());
+
 	if (!bIsHover && IsInBound(mousePosition))
 	{
 		bIsHover = true;
