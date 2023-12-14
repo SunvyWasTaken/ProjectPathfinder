@@ -22,6 +22,11 @@ bool SComposant::RenderComposant(Window* window)
 
 bool const SComposant::IsInBound(const FVector2D& loc) const
 {
-	const FVector2D halfSize = GetSize()/2;
-	return loc.X <= GetLocation().X + halfSize.X && loc.X >= GetLocation().X - halfSize.X && loc.Y <= GetLocation().Y + halfSize.Y && loc.Y >= GetLocation().Y - halfSize.Y;
+	const FVector2D halfSize = GetSize();
+	const FVector2D minSize = GetLocation() - halfSize;
+	const FVector2D maxSize = GetLocation() + halfSize;
+	std::cout << "Mouse : " << loc << " -> min : " << minSize << " max : " << maxSize << std::endl;
+	const bool bIsInbound = loc <= maxSize && loc >= minSize;
+	std::cout << "IsInbound : " << bIsInbound << std::endl;
+	return bIsInbound;
 }
