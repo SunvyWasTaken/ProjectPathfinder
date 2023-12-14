@@ -21,6 +21,8 @@ include_directories(${CMAKE_SOURCE_DIR}/${DLL_NAME}/src)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
+target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>:DEBUG>)
+
 add_dependencies(${PROJECT_NAME} ${DLL_NAME})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-network sfml-graphics sfml-window Spoon )
