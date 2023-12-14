@@ -21,26 +21,23 @@ struct SPOON_API Vector2D
 
 	// Operator
 #pragma region Operator
-	inline Vector2D<T> operator+=(Vector2D<T>& _val)
+	inline Vector2D<T> operator+=(const Vector2D<T>& _val)
 	{
 		X += _val.X; Y += _val.Y;
 		return *this;
 	}
 
-	inline Vector2D<T> operator-=(Vector2D<T>& _val)
+	inline Vector2D<T> operator-=(const Vector2D<T>& _val)
 	{
 		X -= _val.X; Y -= _val.Y;
 		return *this;
 	}
 
-	inline bool operator==(Vector2D<T>& _val) const
+	template <typename L>
+	inline Vector2D<T> operator/=(const L& _val)
 	{
-		return (X == _val.X) && (Y == _val.Y);
-	}
-
-	inline bool operator!=(Vector2D<T>& _val) const
-	{
-		return !(*this == _val);
+		X/=_val; Y/=_val;
+		return *this;
 	}
 
 #pragma endregion // Operator
@@ -66,8 +63,8 @@ __forceinline Vector2D<T> operator+(const Vector2D<T>& right, const Vector2D<T>&
 	return Vector2D<T>(right.X + left.X, right.Y + left.Y);
 }
 
-template <typename T>
-__forceinline Vector2D<T> operator+(const Vector2D<T>& right, const T& left)
+template <typename T, typename L = T>
+__forceinline Vector2D<T> operator+(const Vector2D<T>& right, const L& left)
 {
 	return Vector2D<T>(right.X + left, right.Y + left);
 }
@@ -119,8 +116,7 @@ std::ostream& operator<<(std::ostream& os, const Vector2D<T>& var)
 {
 	return os << "X : " << var.X << ", Y : " << var.Y;
 }
-
-#pragma endregion
+#pragma endregion // Operator copy
 
 #pragma endregion Vector
 
@@ -136,7 +132,7 @@ struct FColor
 
 	FColor() : R(0), G(0), B(0), A(0) {};
 
-	FColor(const unsigned char& val) : R(val), G(val), B(val), A(val) {};
+	explicit FColor(const unsigned char& val) : R(val), G(val), B(val), A(val) {};
 
 	FColor(const unsigned char& color, unsigned char alpha) : R(color), G(color), B(color), A(alpha) {};
 
@@ -148,6 +144,12 @@ struct FColor
 
 	static FColor White() { return FColor(255); }
 
+	static FColor Red() { return FColor(255, 0, 0); }
+
+	static FColor Green() { return FColor(0, 255, 0); }
+
+	static FColor Blue() { return FColor(0, 0, 255); }
+
 };
 
-#pragma endregion
+#pragma endregion // Color

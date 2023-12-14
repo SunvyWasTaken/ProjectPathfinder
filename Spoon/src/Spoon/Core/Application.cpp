@@ -91,7 +91,10 @@ bool Application::OnWindowClose(WindowCloseEvent& e)
 
 bool Application::OnKeyPressed(KeyPressedEvent& e)
 {
+#if DEBUG
 	std::cout << e.ToString() << std::endl;
+#endif // DEBUG
+
 	// Resend les event à tous les objets qui possède un bind
 	// je sais pas encore vraiment faudrait que je fasse un system de listerner
 	// comme ça des que la fonction et call pouf je call tous les autres.
