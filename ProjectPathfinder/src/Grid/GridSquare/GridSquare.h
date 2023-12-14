@@ -2,10 +2,9 @@
 
 #include "Spoon.h"
 
-typedef std::vector<GridSquare*> GridSquareCollection;
 class PlayGrid;
 
-class SPOON_API GridSquare: public SObject
+class GridSquare: public SActor
 {
 public:
 	GridSquare(): p_ParentGrid(nullptr) {};
@@ -17,3 +16,4 @@ public:
 	PlayGrid* p_ParentGrid;
 };
 
+typedef std::vector<GridSquare*> GridSquareCollection;

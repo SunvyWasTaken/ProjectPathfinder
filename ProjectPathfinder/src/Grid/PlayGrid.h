@@ -3,7 +3,7 @@
 
 class GridSquare;
 
-class SPOON_API PlayGrid : public SObject
+class PlayGrid : public SActor
 {
 public:
     explicit PlayGrid(unsigned int width);

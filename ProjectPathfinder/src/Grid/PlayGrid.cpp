@@ -1,6 +1,6 @@
 #include "PlayGrid.h"
 
-#include "EmptySquare.h"
+#include "Grid/GridSquare/EmptySquare.h"
 
 PlayGrid::PlayGrid(unsigned int width): width(width)
 {
