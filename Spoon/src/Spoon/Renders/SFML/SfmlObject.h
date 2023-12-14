@@ -7,11 +7,13 @@ class SfmlRender : public ObjectRender
 {
 public:
 	
-	SfmlRender();
+	SfmlRender(SObject* owner, FColor* color);
 
 	virtual ~SfmlRender() { delete shape; };
 
 	void SpoonDraw(class Window* windowRef) override;
+
+	virtual void OnUpdate() override;
 
 private:
 

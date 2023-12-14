@@ -1,40 +1,40 @@
-#include "snpch.h"
 #include "SObject.h"
-#include "ObjectRender.h"
+#include "Level.h"
 
-SObject::SObject()
+SObject::SObject() : ObjectTransform()
 {
-	Render = ObjectRender::Create();
-	Render->RenderLocation = &ObjectLocation;
-	Render->ObjectColor = &ObjectColor;
 }
 
 SObject::~SObject()
 {
-	delete Render;
-}
-
-void SObject::BeginPlay()
-{
-	return;
-}
-
-void SObject::Tick(float DeltaTime)
-{
-	return;
 }
 
 FVector2D SObject::GetLocation() const
 {
-	return ObjectLocation;
+	return ObjectTransform.Location;
 }
 
 void SObject::SetLocation(const FVector2D& loc)
 {
-	ObjectLocation = loc;
+	ObjectTransform.Location = loc;
 }
 
-void SObject::SetColor(FColor color)
+FVector2D SObject::GetSize() const
 {
-	ObjectColor = color;
+	return ObjectTransform.Size;
+}
+
+void SObject::SetSize(const FVector2D& size)
+{
+	ObjectTransform.Size = size;
+}
+
+FTransform SObject::GetTransform() const
+{
+	return ObjectTransform;
+}
+
+void SObject::SetTransform(const FTransform& transform)
+{
+	ObjectTransform = transform;
 }

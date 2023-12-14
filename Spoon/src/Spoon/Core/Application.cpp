@@ -5,15 +5,19 @@
 #include "Spoon/Events/ApplicationEvent.h"
 #include "Spoon/Renders/SFML/SfmlObject.h"
 
-#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+#include "Object/SWidget.h"
+
+Application* Application::s_Instance = nullptr;
 
 Application::Application() : WindowName("Spoon Engine"), ScreenSize(FVector2D(1280, 720))
 {
+	s_Instance = this;
 	Init();
 }
 
 Application::Application(std::string windowName, FVector2D screensize) : WindowName(windowName), ScreenSize(screensize)
 {
+	s_Instance = this;
 	Init();
 }
 
@@ -29,26 +33,54 @@ void Application::Init()
 	WindowRef->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
 	CurrentLevel = new Level();
+
+	m_LayerOverlay = new SWidget();
 }
 
 void Application::Run()
 {
+	PushOverlay(m_LayerOverlay);
 	while (bIsRunning)
 	{
+		for (Layer* layer : m_LayerStack)
+		{
+			layer->OnUpdate();
+		}
 		WindowRef->OnUpdate();
 	}
 }
 
 void Application::OnEvent(SpoonEvent& e)
 {
-	// Ici dfaire un event type pour les trier.
-		// call si l'event est window close.
 	EventDispatcher dispatcher(e);
-	dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(Application::OnKeyPressed));
-	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+
+	for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+	{
+		(*--it)->OnEvent(e);
+		if (e.Handle)
+			break;
+	}
+
 	dispatcher.Dispatch<AppTickEvent>(BIND_EVENT_FN(Application::OnAppTick));
+
 	dispatcher.Dispatch<AppRenderEvent>(BIND_EVENT_FN(Application::OnRender));
-	dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
+
+	dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(Application::OnKeyPressed));
+
+	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+
+}
+
+void Application::PushOverlay(Layer* layer)
+{
+	m_LayerStack.PushLayer(layer);
+	layer->OnAttach();
+}
+
+void Application::PushLayer(Layer* layer)
+{
+	m_LayerStack.PushOverlay(layer);
+	layer->OnAttach();
 }
 
 bool Application::OnWindowClose(WindowCloseEvent& e)
@@ -68,12 +100,16 @@ bool Application::OnKeyPressed(KeyPressedEvent& e)
 
 bool Application::OnAppTick(AppTickEvent& e)
 {
-	CurrentLevel->UpdateEntity();
+	CurrentLevel->UpdateEntity(e.GetDeltaTime());
 	return true;
 }
 
 bool Application::OnRender(AppRenderEvent& e)
 {
+	for (auto layout : m_LayerStack)
+	{
+		layout->Render(WindowRef);
+	}
 	for (auto entity : CurrentLevel->GetEntityList())
 	{
 		entity->GetRender()->SpoonDraw(WindowRef);

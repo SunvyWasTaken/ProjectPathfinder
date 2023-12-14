@@ -10,10 +10,15 @@ public:
 	{}
 };
 
+Application* CreateApplication()
+{
+	return new PathApp();
+}
+
 
 int main()
 {
-	auto* app = new PathApp();
+	auto* app = CreateApplication();
 
 	//SObject* Carre = app->GetWorld()->SpawnActor<SObject>(FVector2D(50, 80));
 	//Carre->SetColor(FColor(255));
@@ -59,9 +64,8 @@ int main()
 	oui->StartNode = Start;
 	oui->DestinationNode = Destination;
 	oui->OpenList.push_back(Start);
-	
 
-	//std::cout << "oui";
+
 	app->Run();
 	delete app;
 

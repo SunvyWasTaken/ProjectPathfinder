@@ -34,10 +34,14 @@ public:
 class AppTickEvent : public SpoonEvent
 {
 public:
-	AppTickEvent() = default;
+	AppTickEvent(double deltatime) :DeltaTime(deltatime) {};
+
+	double GetDeltaTime() const { return DeltaTime; }
 
 	EVENT_CLASS_TYPE(AppTick)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+private:
+	double DeltaTime;
 };
 
 class AppUpdateEvent : public SpoonEvent

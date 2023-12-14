@@ -1,19 +1,31 @@
 #pragma 
-#include "Core.h"
+#include "SObject.h"
 
-class SPOON_API ObjectRender
+class SPOON_API ObjectRender : public SObject
 {
 public:
 
-	ObjectRender();
+	ObjectRender(SObject* owner, FColor* color);
 
 	virtual ~ObjectRender();
 
 	virtual void SpoonDraw(class Window* windowRef) = 0;
 
-	static ObjectRender* Create();
+	static ObjectRender* Create(SObject* owner, FColor* color);
 
-	FVector2D* RenderLocation;
+	template <typename T = SObject>
+	T* GetOwner()
+	{
+		return (T*)Owner;
+	}
+
+	virtual void OnUpdate() = 0;
+
+private:
+
+	SObject* Owner;
+
+protected:
 
 	FColor* ObjectColor;
 

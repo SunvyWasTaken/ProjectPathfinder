@@ -1,6 +1,7 @@
 #include "SfmlWindow.h"
 #include "Spoon/Events/KeyEvent.h"
 #include "Spoon/Events/ApplicationEvent.h"
+#include "Spoon/Events/MouseEvent.h"
 
 // Function call de maniere indirect lorsque j'ai besoin de la fenetre.
 Window* Window::Create(const WindowsProps& props)
@@ -27,10 +28,11 @@ void SfmlWindow::OnUpdate()
 	{
 		HandleEvent(event);
 	}
-	// Tick 
-	AppTickEvent TickEvent;
+	// Tick
+	sf::Time time = clock.getElapsedTime();
+	clock.restart();
+	AppTickEvent TickEvent(time.asSeconds());
 	EventCallBack(TickEvent);
-
 	// Puis render des items.
 	AppRenderEvent RenderEvent;
 	EventCallBack(RenderEvent);
@@ -73,19 +75,32 @@ void SfmlWindow::HandleEvent(sf::Event& event)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
-		KeyPressedEvent tmpevent(event.key.code);
+		KeyPressedEvent tmpevent(event.key.scancode);
 		EventCallBack(tmpevent);
-		return;
 	}
-	if (event.type == sf::Event::Closed)
+	else if (event.type == sf::Event::Closed)
 	{
 		WindowCloseEvent tmpevent;
 		EventCallBack(tmpevent);
-		return;
 	}
-	if (event.type == sf::Event::Resized)
+	else if (event.type == sf::Event::Resized)
 	{
 		WindowResizeEvent tmpevent(event.size.width, event.size.height);
+		EventCallBack(tmpevent);
+	}
+	else if (event.type == sf::Event::MouseMoved)
+	{
+		MouseMovedEvent tmpevent(event.mouseMove.x, event.mouseMove.y);
+		EventCallBack(tmpevent);
+	}
+	else if (event.type == sf::Event::MouseButtonPressed)
+	{
+		MouseButtonPressedEvent tmpevent(event.mouseButton.button);
+		EventCallBack(tmpevent);
+	}
+	else if (event.type == sf::Event::MouseButtonReleased)
+	{
+		MouseButtonReleasedEvent tmpevent(event.mouseButton.button);
 		EventCallBack(tmpevent);
 	}
 	// TODO mettre le reste des events qui pourrais servire ici.

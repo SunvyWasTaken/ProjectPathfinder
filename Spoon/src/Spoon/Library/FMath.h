@@ -1,10 +1,11 @@
 #pragma once
-#include "snpch.h"
+#include "Spoon/Core/Core.h"
+#include <snpch.h>
 
 #pragma region Vector
 
 template <typename T>
-struct Vector2D
+struct SPOON_API Vector2D
 {
 	T X;
 	T Y;
@@ -32,12 +33,12 @@ struct Vector2D
 		return *this;
 	}
 
-	inline bool operator==(Vector2D<T>& _val)
+	inline bool operator==(Vector2D<T>& _val) const
 	{
-		return X == _val.X && Y == _val.Y;
+		return (X == _val.X) && (Y == _val.Y);
 	}
 
-	inline bool operator!=(Vector2D<T>& _val)
+	inline bool operator!=(Vector2D<T>& _val) const
 	{
 		return !(*this == _val);
 	}
@@ -77,20 +78,26 @@ __forceinline Vector2D<T> operator-(Vector2D<T>& right, Vector2D<T>& left)
 	return Vector2D<T>(right.X - left.X, right.Y - left.Y);
 }
 
-template <typename T>
-__forceinline Vector2D<T> operator-(Vector2D<T>& right, T& left)
+template <typename T, typename L = T>
+__forceinline Vector2D<T> operator-(Vector2D<T>& right, const L& left)
 {
 	return Vector2D<T>(right.X - left, right.Y - left);
 }
 
-template <typename T>
-__forceinline bool operator==(Vector2D<T>& left, Vector2D<T>& right)
+template <typename T, typename L = T>
+__forceinline Vector2D<T> operator/(const Vector2D<T>& right, const L& left)
 {
-	return left.X == right.X && left.Y == right.Y;
+	return Vector2D<T>(right.X/left, right.Y/left);
 }
 
 template <typename T>
-__forceinline bool operator!=(Vector2D<T>& left, Vector2D<T>& right)
+__forceinline bool const operator==(const Vector2D<T>& left, const Vector2D<T>& right)
+{
+	return (left.X == right.X) && (left.Y == right.Y);
+}
+
+template <typename T>
+__forceinline bool const operator!=(const Vector2D<T>& left, const Vector2D<T>& right)
 {
 	return !(left == right);
 }
@@ -98,6 +105,8 @@ __forceinline bool operator!=(Vector2D<T>& left, Vector2D<T>& right)
 #pragma endregion
 
 #pragma endregion Vector
+
+
 
 #pragma region Color
 struct FColor

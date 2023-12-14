@@ -6,9 +6,13 @@
 #endif // SN_BUILD_DLL
 
 template <typename T> struct Vector2D;
-
 using FVector2D = Vector2D<float>;
+
+template <typename T> struct Transform;
+using FTransform = Transform<float>;
 
 struct FColor;
 
 #define BIT(x) (1 << x)
+
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)

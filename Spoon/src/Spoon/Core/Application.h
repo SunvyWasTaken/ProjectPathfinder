@@ -1,9 +1,12 @@
 #pragma once
 #include "Core.h"
+#include "LayerStack.h"
+#include "Object/SWidget.h"
 #include <snpch.h>
 
 class Level;
 class Window;
+
 
 class SPOON_API Application
 {
@@ -18,19 +21,26 @@ public:
 
 	void Run();
 
+	// Dispatch Event
 	void OnEvent(class SpoonEvent& e);
 
-	bool OnWindowClose(class WindowCloseEvent& e);
+	void PushOverlay(Layer* layer);
+	void PushLayer(Layer* layer);
 
-	bool OnKeyPressed(class KeyPressedEvent& e);
-
-	bool OnAppTick(class AppTickEvent& e);
-
-	bool OnRender(class AppRenderEvent& e);
-
-	bool OnWindowResize(class WindowResizeEvent& e);
+	class SWidget* GetLayerOverlay() const { return m_LayerOverlay; }
 
 	Level* GetWorld() const;
+
+	__forceinline static Application& Get() { return *s_Instance; }
+
+private:
+
+	// Event
+	bool OnWindowClose(class WindowCloseEvent& e);
+	bool OnKeyPressed(class KeyPressedEvent& e);
+	bool OnAppTick(class AppTickEvent& e);
+	bool OnRender(class AppRenderEvent& e);
+	bool OnWindowResize(class WindowResizeEvent& e);
 
 	#pragma region WindowProperty
 
@@ -48,4 +58,24 @@ private:
 
 	Level* CurrentLevel;
 
+	LayerStack m_LayerStack;
+
+	class SWidget* m_LayerOverlay;
+
+
+	static Application* s_Instance;
+
 };
+
+Application* CreateApplication();
+
+template <typename TWidget = class SComposant>
+static TWidget* CreateWidget(class SComposant* owner = nullptr)
+{
+	TWidget* tmp = new TWidget(owner);
+
+	if(tmp && !owner)
+		Application::Get().GetLayerOverlay()->AddComposant(tmp);
+
+	return tmp;
+}
