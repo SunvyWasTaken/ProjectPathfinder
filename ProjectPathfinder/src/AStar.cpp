@@ -29,6 +29,7 @@ AStar::~AStar()
 
 void AStar::Tick(float Deltatime)
 {
+	SActor::Tick(Deltatime);
 	//std::cout << OpenList.size() << std::endl;
 	Search();
 }

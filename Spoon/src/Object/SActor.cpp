@@ -22,6 +22,7 @@ void SActor::BeginPlay()
 
 void SActor::Tick(float DeltaTime)
 {
+	Render->OnUpdate();
 }
 
 void SActor::DestroyActor()
