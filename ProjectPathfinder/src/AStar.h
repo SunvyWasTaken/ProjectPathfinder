@@ -25,7 +25,10 @@ public:
 	SNode* StartNode;
 	SNode* DestinationNode;
 	bool bIsPathFound = false;
+#if DEBUG
 	int Iterator = 0;
+#endif
+	
 
 	FColor OpenColor;
 	FColor CloseColor;
