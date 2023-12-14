@@ -1,11 +1,11 @@
 #pragma once
-#include "Spoon/Core/SObject.h"
+#include "Object/SActor.h"
 #include "vector"
 #include "Spoon/Library/FMath.h"
 
 class SNode;
 
-class AStar : public SObject
+class AStar : public SActor
 {
 public:
 	AStar();

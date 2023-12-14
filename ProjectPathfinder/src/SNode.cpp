@@ -32,7 +32,6 @@ int SNode::GetDistance(SNode* target)
 
 void SNode::SetConnection(SNode* connection)
 {
-	Connection = new SNode;
 	Connection = connection;
 }
 

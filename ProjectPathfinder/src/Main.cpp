@@ -33,8 +33,7 @@ int main()
 	{	
 		for (unsigned j = 0; j < Row; j++)
 		{
-			SNode* Carre = new SNode;
-			Carre = app->GetWorld()->SpawnActor<SNode>(FVector2D(50 * j, 50 * i)); // change the 15 by square size + padding
+			SNode* Carre = app->GetWorld()->SpawnActor<SNode>(FTransform(FVector2D(50 * j, 50 * i), FVector2D(20))); // change the 15 by square size + padding
 			Carre->SetColor(FColor(0,0,255,255)); // RGBA for blue
 			Carre->SetLocation(FVector2D(j * 50, i * 50));
 			Grid.push_back(Carre);
@@ -47,17 +46,13 @@ int main()
 	for (unsigned i = 0; i < Grid.size() - 1; i++)
 	{
 		Grid[ID]->AddNeighbour(Grid, ID); 
-		//std::cout << ID << " : " << Grid[ID]->GetLocation().X << " " << Grid[ID]->GetLocation().Y << std::endl;
 		ID++;
 	}
 
-	AStar* oui = app->GetWorld()->SpawnActor<AStar>(FVector2D());
+	AStar* oui = app->GetWorld()->SpawnActor<AStar>(FTransform());
 	
-	SNode* Start = new SNode;
-	Start = Grid[0];
-	SNode* Destination = new SNode;
-	//Destination = Grid[Grid.size() - 1];
-	Destination = Grid[15];
+	SNode* Start = Grid[0];
+	SNode* Destination = Grid[15];
 
 	
 

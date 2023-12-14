@@ -1,8 +1,8 @@
 #pragma once
-#include "Spoon/Core/SObject.h"
+#include "Object/SActor.h"
 #include "vector"
 
-class SNode : public SObject
+class SNode : public SActor
 {
 public:
 	SNode();

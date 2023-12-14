@@ -63,13 +63,8 @@ std::vector<SNode*> AStar::Search()
 		if (CurrentLoc == DestinationLoc)
 		{
 			SNode* CurrentPathTile = DestinationNode;
-			//Path.push_back(CurrentPathTile);
-			/*FVector2D CurrentPathTileLoc = CurrentPathTile->GetLocation();
-			FVector2D StartLoc = StartNode->GetLocation()*/;
-			int ID = 0;
 			while(CurrentPathTile->Connection)
 			{
-				ID++;
 				Path.push_back(CurrentPathTile);
 				CurrentPathTile = CurrentPathTile->Connection;
 			}
