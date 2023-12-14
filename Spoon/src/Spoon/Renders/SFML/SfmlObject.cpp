@@ -14,6 +14,7 @@ void SfmlRender::OnUpdate()
 	shape->setFillColor(sf::Color(ObjectColor->R, ObjectColor->G, ObjectColor->B, ObjectColor->A));
 	shape->setPosition(GetOwner()->GetLocation().X, GetOwner()->GetLocation().Y);
 	shape->setSize(sf::Vector2f(GetOwner()->GetSize().X, GetOwner()->GetSize().Y));
+	shape->setOrigin(GetOwner()->GetSize().X/2, GetOwner()->GetSize().Y/2);
 }
 
 SfmlRender::SfmlRender(SObject* owner, FColor* color) : ObjectRender(owner, color), shape(new sf::RectangleShape())
