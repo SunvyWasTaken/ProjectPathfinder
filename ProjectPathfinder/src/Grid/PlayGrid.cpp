@@ -18,14 +18,25 @@ PlayGrid::~PlayGrid()
 	}
 }
 
-GridSquare& PlayGrid::getAt(unsigned int x, unsigned int y) const
+GridSquare& PlayGrid::GetAt(unsigned int x, unsigned int y) const
 {
 	assert((x < width && y < width), "Coordinates not in range");
 	unsigned int index = x + (width * y);
 	return *GridSquares[index];
 }
 
-GridSquare::GridSquareCollection PlayGrid::getNeighbors(const GridSquare&) const
+GridSquare::GridSquareCollection PlayGrid::GetNeighbors(const unsigned int x, const unsigned int y) const
 {
-	return GridSquare::GridSquareCollection();
+	GridSquare::GridSquareCollection temp;
+
+	if(x+1 < width)
+		temp.push_back(&GetAt(x + 1, y));
+	if(x > 0)
+		temp.push_back(&GetAt(x - 1, y));
+	if(y+1 < width)
+		temp.push_back(&GetAt(x, y + 1));
+	if (y > 0)
+		temp.push_back(&GetAt(x, y - 1));
+
+	return temp;
 }
