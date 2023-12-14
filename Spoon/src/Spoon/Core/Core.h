@@ -7,9 +7,13 @@
 
 template <typename T> struct Vector2D;
 using FVector2D = Vector2D<float>;
+using IVector2D = Vector2D<int>;
+using DVector2D = Vector2D<double>;
 
 template <typename T> struct Transform;
 using FTransform = Transform<float>;
+using ITransform = Transform<int>;
+using DTransform = Transform<double>;
 
 struct FColor;
 
