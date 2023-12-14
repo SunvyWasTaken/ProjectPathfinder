@@ -38,6 +38,7 @@ void SNode::SetConnection(SNode* connection)
 
 void SNode::AddNeighbour(std::vector<SNode*> Grid, int col, int row, int ID)
 {
+	// old neighbours systeme -> with magic number haha...
 	/*if (GetLocation().X < col * 21 - 21)
 		Neighbours.push_back(Grid[ID + 1]);
 
@@ -63,17 +64,21 @@ void SNode::AddNeighbour(std::vector<SNode*> Grid, int col, int row, int ID)
 	if (y > 0)
 		Neighbours.push_back(Grid[ID - row]);
 
-	if (x > 0 && y > 0)
-		Neighbours.push_back(Grid[ID - 1 - row]);
+	if (bCanDiag)
+	{
+		if (x > 0 && y > 0)
+			Neighbours.push_back(Grid[ID - 1 - row]);
 
-	if (x < col - 1 && y > 0)
-		Neighbours.push_back(Grid[ID + 1 - row]);
+		if (x < col - 1 && y > 0)
+			Neighbours.push_back(Grid[ID + 1 - row]);
 
-	if (x > 0 && y < row - 1)
-		Neighbours.push_back(Grid[ID - 1 + row]);
+		if (x > 0 && y < row - 1)
+			Neighbours.push_back(Grid[ID - 1 + row]);
 
-	if (x < col - 1 && y < row - 1)
-		Neighbours.push_back(Grid[ID + 1 + row]);
+		if (x < col - 1 && y < row - 1)
+			Neighbours.push_back(Grid[ID + 1 + row]);
+	}
+	
 
 }
 

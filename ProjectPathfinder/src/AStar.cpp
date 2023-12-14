@@ -30,7 +30,7 @@ AStar::~AStar()
 void AStar::Tick(float Deltatime)
 {
 	SActor::Tick(Deltatime);
-	if(!bIsPathFound)
+	if(!bIsPathFound && StartNode && DestinationNode)
 		Search();
 }
 
@@ -39,6 +39,9 @@ std::vector<SNode*> AStar::Search()
 	//OpenList.push_back(StartNode);
 	if (!OpenList.empty())
 	{
+#if DEBUG
+		Iterator++;
+#endif // DEBUG
 		// current has to be the node with the lowest f
 		SNode* Current;
 		Current = OpenList[0];
@@ -74,6 +77,10 @@ std::vector<SNode*> AStar::Search()
 				tile->SetColor(PathColor);
 			StartNode->SetColor(PathColor);
 			bIsPathFound = true;
+#if DEBUG
+			std::cout << "nombre d'iteration " << Iterator << std::endl;
+#endif // DEBUG
+
 			return Path;
 		}
 

@@ -21,21 +21,23 @@ int main()
 
 	// Make a Grid of Square
 	std::vector<SNode*> Grid;
-	int Col = 20;
-	int Row = 20;
+	int Col = 100;
+	int Row = 100;
+	int SquareSize = 5;
+	int Padding = 1;
 
 	for (unsigned i = 0; i < Row; i++)
 	{	
 		for (unsigned j = 0; j < Col; j++)
 		{
-			SNode* Carre = app->GetWorld()->SpawnActor<SNode>(FTransform(FVector2D(21 * j, 21 * i), FVector2D(20)));
-			Carre->SetLocation(FVector2D(j * 30 + 10, i * 30 + 10));
+			SNode* Carre = app->GetWorld()->SpawnActor<SNode>(FTransform(FVector2D(SquareSize * j, SquareSize * i), FVector2D(SquareSize)));
+			Carre->SetLocation(FVector2D(j * SquareSize + Padding, i * SquareSize + Padding));
 			Carre->SetColor(FColor(0, 0, 255, 255));
 			Carre->SetWalkable(false);
+			Carre->bCanDiag = false;
 			Carre->x = j;
 			Carre->y = i;
 			Grid.push_back(Carre);
-			
 		}
 	}
 
@@ -49,18 +51,23 @@ int main()
 
 	AStar* oui = app->GetWorld()->SpawnActor<AStar>(FTransform());
 	
+	// define the start node and the destination node
+	// make sure that it is not a wall
 	SNode* Start = Grid[0];
 	Start->SetWalkable(true);
 	SNode* Destination = Grid[Grid.size() - 1];
 	Destination->SetWalkable(true);
 
-	// stop le search when path is find
-	// faire en sorte que ça fonctionne avec une grille non carré
-	
-
+	// Put the start and destination node into the algo
 	oui->StartNode = Start;
 	oui->DestinationNode = Destination;
 	oui->OpenList.push_back(Start);
+
+	// TO DO
+	// stop le search when path is find
+	// faire en sorte que ça fonctionne avec une grille non carré
+	// show number of iteration at the end of the Path
+	//faire un video/gif de la recherche de path windows+g
 
 
 	app->Run();
