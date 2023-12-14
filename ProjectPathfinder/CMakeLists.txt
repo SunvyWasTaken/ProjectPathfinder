@@ -5,6 +5,10 @@ set(DLL_NAME "Spoon")
 set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/ProjectPathfinder/src")
 set(SOURCES
 	"${SOURCE_DIR}/main.cpp"
+	"${SOURCE_DIR}/AStar.h"
+	"${SOURCE_DIR}/AStar.cpp"
+	"${SOURCE_DIR}/SNode.h"
+	"${SOURCE_DIR}/SNode.cpp"
 )
 
 find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
