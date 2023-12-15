@@ -14,13 +14,13 @@ Application* CreateApplication()
 	return new PathApp();
 }
 
-void StartAStar(Application* app, unsigned GridPosition, const std::vector<SNode*>& Grid)
+void StartAStar(Application* app, const std::vector<SNode*>& Grid)
 {
 	AStar* algo = app->GetWorld()->SpawnActor<AStar>(FTransform());
-	algo->SetLocation(FVector2D(GridPosition, GridPosition));
 
 	for(auto &it : Grid)
 	{
+		// Search for a start and an end in the grid
 		CustomNode* tempNode = static_cast<CustomNode*>(it);
 		if (tempNode->currentState == CustomNode::StartSate)
 			algo->StartNode = it;
@@ -28,8 +28,8 @@ void StartAStar(Application* app, unsigned GridPosition, const std::vector<SNode
 			algo->DestinationNode = it;
 	}
 
+	// define the start node and the destination node if they are not set
 	if (algo->StartNode == nullptr) {
-		// define the start node and the destination node
 		CustomNode* Start = static_cast<CustomNode*>(Grid[0]);
 		Start->BeStart();
 		algo->StartNode = Start;
@@ -44,12 +44,27 @@ void StartAStar(Application* app, unsigned GridPosition, const std::vector<SNode
 	algo->OpenList.push_back(algo->StartNode);
 }
 
+void ResetAStar(const std::vector<SNode*>& Grid)
+{
+	// TODO: delete old AStar object
+	for (auto& it : Grid)
+	{
+		it->SetColor(FColor::White());
+	}
+}
+
 struct StartButton : SButton
 {
 	StartButton(SComposant* owner) : SButton(owner) {};
-	void OnPressed() override { StartAStar(app, pos, *grid); };
+	void OnPressed() override { StartAStar(app, *grid); };
 	Application* app;
-	unsigned pos;
+	std::vector<SNode*>* grid;
+};
+
+struct ResetButton : SButton
+{
+	ResetButton(SComposant* owner) : SButton(owner) {};
+	void OnPressed() override { ResetAStar(*grid); };
 	std::vector<SNode*>* grid;
 };
 
@@ -95,11 +110,18 @@ int main()
 #pragma region StartButton
 	StartButton* startButton = CreateWidget<StartButton>();
 	startButton->app = app;
-	startButton->pos = GridPosition;
 	startButton->grid = &Grid;
 	startButton->SetLocation(FVector2D(950, 372));
 	startButton->SetSize(FVector2D(460, 100));
 	startButton->SetColor(FColor(217));
+#pragma endregion
+
+#pragma region ResetButton
+	ResetButton* resetButton = CreateWidget<ResetButton>();
+	resetButton->grid = &Grid;
+	resetButton->SetLocation(FVector2D(950, 572));
+	resetButton->SetSize(FVector2D(460, 100));
+	resetButton->SetColor(FColor(240));
 #pragma endregion
 
 	app->Run();
