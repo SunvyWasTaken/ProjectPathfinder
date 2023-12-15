@@ -10,7 +10,6 @@ AStar::AStar()
 	PathColor = FColor(255, 255, 255, 255);
 }
 
-
 AStar::~AStar()
 {
 }
@@ -62,6 +61,7 @@ std::vector<SNode*> AStar::Search()
 
 		Current->SetColor(CloseColor);
 
+		// When Current Is Destination Add all node in the Path Vector and change its color to display it
 		FVector2D CurrentLoc = Current->GetLocation();
 		FVector2D DestinationLoc = DestinationNode->GetLocation();
 		if (CurrentLoc == DestinationLoc)
@@ -84,14 +84,15 @@ std::vector<SNode*> AStar::Search()
 			return Path;
 		}
 
-
+		// Calcul H and G Score of all Neighbours of Current to deteremine F Score (Closest node to Destination)
 		for (auto neighbour : Current->Neighbours)
 		{
 			if (neighbour->bIsWalkable && !(std::find(CloseList.begin(), CloseList.end(),neighbour) != CloseList.end()))
 			{
 				InSearch = std::find(OpenList.begin(), OpenList.end(), neighbour) != OpenList.end();
 				
-				// add getdistance into node that calcul the distance between a node and another one
+				// TO DO
+				// add getdistance into node that calcul the distance between a node and another one	-> Done
 				CostToNeighbour = Current->GScore + Current->GetDistance(neighbour);
 
 				if (!InSearch || CostToNeighbour < neighbour->GScore)
