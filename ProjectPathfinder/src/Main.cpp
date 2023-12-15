@@ -1,5 +1,5 @@
 #include "Spoon.h"
-#include "SNode.h"
+#include "CustomNode.h"
 #include "AStar.h"
 
 class PathApp : public Application
@@ -14,61 +14,115 @@ Application* CreateApplication()
 	return new PathApp();
 }
 
+void StartAStar(Application* app, const std::vector<SNode*>& Grid)
+{
+	AStar* algo = app->GetWorld()->SpawnActor<AStar>(FTransform());
+
+	for(auto &it : Grid)
+	{
+		// Search for a start and an end in the grid
+		CustomNode* tempNode = static_cast<CustomNode*>(it);
+		if (tempNode->currentState == CustomNode::StartSate)
+			algo->StartNode = it;
+		else if (tempNode->currentState == CustomNode::EndState)
+			algo->DestinationNode = it;
+	}
+
+	// define the start node and the destination node if they are not set
+	if (algo->StartNode == nullptr) {
+		CustomNode* Start = static_cast<CustomNode*>(Grid[0]);
+		Start->BeStart();
+		algo->StartNode = Start;
+	}
+	if (algo->DestinationNode == nullptr) {
+		CustomNode* Destination = static_cast<CustomNode*>(Grid[Grid.size() - 1]);
+		Destination->BeEnd();
+		algo->DestinationNode = Destination;
+	}
+
+	// Put the start and destination node into the algo
+	algo->OpenList.push_back(algo->StartNode);
+}
+
+void ResetAStar(const std::vector<SNode*>& Grid)
+{
+	// TODO: delete old AStar object
+	for (auto& it : Grid)
+	{
+		it->SetColor(FColor::White());
+	}
+}
+
+struct StartButton : SButton
+{
+	StartButton(SComposant* owner) : SButton(owner) {};
+	void OnPressed() override { StartAStar(app, *grid); };
+	Application* app;
+	std::vector<SNode*>* grid;
+};
+
+struct ResetButton : SButton
+{
+	ResetButton(SComposant* owner) : SButton(owner) {};
+	void OnPressed() override { ResetAStar(*grid); };
+	std::vector<SNode*>* grid;
+};
 
 int main()
 {
 	auto* app = CreateApplication();
 
-	// Make a Grid of Square
-	std::vector<SNode*> Grid;
-	int Col = 100;
-	int Row = 100;
-	int SquareSize = 5;
-	int Padding = 1;
+#pragma region Squares
 
-	for (unsigned i = 0; i < Row; i++)
+	// Make a Grid of Square
+	//todo: create grid class to be able to deal with inter-square operation (setting isEndSet/isStartSet)
+	std::vector<SNode*> Grid;
+	unsigned GridPosition = 125;
+	unsigned GridSize = 10;
+	unsigned SquareSize = 10;
+	unsigned Padding = 40;
+
+	for (unsigned i = 0; i < GridSize; i++)
 	{	
-		for (unsigned j = 0; j < Col; j++)
+		for (unsigned j = 0; j < GridSize; j++)
 		{
-			SNode* Carre = app->GetWorld()->SpawnActor<SNode>(FTransform(FVector2D(SquareSize * j, SquareSize * i), FVector2D(SquareSize)));
-			Carre->SetLocation(FVector2D(j * SquareSize + Padding, i * SquareSize + Padding));
-			Carre->SetColor(FColor(0, 0, 255, 255));
-			Carre->SetWalkable(false);
-			Carre->bCanDiag = false;
-			Carre->x = j;
-			Carre->y = i;
-			Grid.push_back(Carre);
+			CustomNode* Node = app->GetWorld()->SpawnActor<CustomNode>(FTransform(FVector2D(SquareSize * j, SquareSize * i), FVector2D(SquareSize)));
+
+			Node->SetLocation(FVector2D(j * (SquareSize + Padding) + GridPosition, i * (SquareSize + Padding) + GridPosition));
+			Node->SetColor(FColor::White());
+			Node->SetSquareSize(SquareSize + Padding);
+
+			Node->x = j;
+			Node->y = i;
+
+			Grid.push_back(static_cast<SNode*>(Node));
 		}
 	}
 
 	int ID = 0;
 	for (unsigned i = 0; i < Grid.size() - 1; i++)
 	{
-		Grid[ID]->AddNeighbour(Grid, Col, Row, ID); 
-		//std::cout << Grid[ID]->x << " " << Grid[ID]->y << std::endl;
+		Grid[ID]->AddNeighbour(Grid, GridSize, GridSize, ID);
 		ID++;
 	}
+#pragma endregion
 
-	AStar* oui = app->GetWorld()->SpawnActor<AStar>(FTransform());
-	
-	// define the start node and the destination node
-	// make sure that it is not a wall
-	SNode* Start = Grid[0];
-	Start->SetWalkable(true);
-	SNode* Destination = Grid[Grid.size() - 1];
-	Destination->SetWalkable(true);
+#pragma region StartButton
+	StartButton* startButton = CreateWidget<StartButton>();
+	startButton->app = app;
+	startButton->grid = &Grid;
+	startButton->SetLocation(FVector2D(950, 372));
+	startButton->SetSize(FVector2D(460, 100));
+	startButton->SetColor(FColor(217));
+#pragma endregion
 
-	// Put the start and destination node into the algo
-	oui->StartNode = Start;
-	oui->DestinationNode = Destination;
-	oui->OpenList.push_back(Start);
-
-	// TO DO
-	// stop le search when path is find
-	// faire en sorte que ça fonctionne avec une grille non carré
-	// show number of iteration at the end of the Path
-	//faire un video/gif de la recherche de path windows+g
-
+#pragma region ResetButton
+	ResetButton* resetButton = CreateWidget<ResetButton>();
+	resetButton->grid = &Grid;
+	resetButton->SetLocation(FVector2D(950, 572));
+	resetButton->SetSize(FVector2D(460, 100));
+	resetButton->SetColor(FColor(240));
+#pragma endregion
 
 	app->Run();
 	delete app;
