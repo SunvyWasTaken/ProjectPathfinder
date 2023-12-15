@@ -77,7 +77,7 @@ void CustomNode::BeObstacle()
 
 	currentState = ObstacleState;
 
-	p_button->SetColor(EmptyColor);
+	p_button->SetColor(ObstacleColor);
 }
 
 void CustomNode::SetLocation(const FVector2D& loc)

@@ -16,19 +16,32 @@ Application* CreateApplication()
 
 void StartAStar(Application* app, unsigned GridPosition, const std::vector<SNode*>& Grid)
 {
-	AStar* oui = app->GetWorld()->SpawnActor<AStar>(FTransform());
-	oui->SetLocation(FVector2D(GridPosition, GridPosition));
+	AStar* algo = app->GetWorld()->SpawnActor<AStar>(FTransform());
+	algo->SetLocation(FVector2D(GridPosition, GridPosition));
 
-	// define the start node and the destination node
-	CustomNode* Start = static_cast<CustomNode*>(Grid[0]);
-	Start->BeStart();
-	CustomNode* Destination = static_cast<CustomNode*>(Grid[Grid.size() - 1]);
-	Destination->BeEnd();
+	for(auto &it : Grid)
+	{
+		CustomNode* tempNode = static_cast<CustomNode*>(it);
+		if (tempNode->currentState == CustomNode::StartSate)
+			algo->StartNode = it;
+		else if (tempNode->currentState == CustomNode::EndState)
+			algo->DestinationNode = it;
+	}
+
+	if (algo->StartNode == nullptr) {
+		// define the start node and the destination node
+		CustomNode* Start = static_cast<CustomNode*>(Grid[0]);
+		Start->BeStart();
+		algo->StartNode = Start;
+	}
+	if (algo->DestinationNode == nullptr) {
+		CustomNode* Destination = static_cast<CustomNode*>(Grid[Grid.size() - 1]);
+		Destination->BeEnd();
+		algo->DestinationNode = Destination;
+	}
 
 	// Put the start and destination node into the algo
-	oui->StartNode = Start;
-	oui->DestinationNode = Destination;
-	oui->OpenList.push_back(Start);
+	algo->OpenList.push_back(algo->StartNode);
 }
 
 struct StartButton : SButton

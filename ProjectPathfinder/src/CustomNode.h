@@ -25,20 +25,21 @@ public:
 	bool bIsStart;
 	bool bIsEnd;
 
-	bool bIsStartSet;
-	bool bIsEndSet;
+	//todo: set when start and end are assigned
+	bool bIsStartSet = false;
+	bool bIsEndSet = false;
 
 	char currentState;
+
+	//todo use state machine (or template ?)
+	static const char StartSate = 1;
+	static const char EndState = 2;
+	static const char EmptyState = 0;
+	static const char ObstacleState = 3;
 
 private:
 	FColor StartColor = FColor(93, 21, 209);
 	FColor EndColor = FColor(237, 90, 90);
 	FColor EmptyColor = FColor(183, 209, 21);
 	FColor ObstacleColor = FColor(67, 75, 19);
-
-	//todo use state machine (or template ?)
-	char StartSate = 1;
-	char EndState = 2;
-	char EmptyState = 0;
-	char ObstacleState = 3;
 };

@@ -22,8 +22,8 @@ public:
 	std::vector<SNode*> CloseList;
 	std::vector<SNode*> Path;
 	std::vector<SNode*> Obstacles;
-	SNode* StartNode;
-	SNode* DestinationNode;
+	SNode* StartNode = nullptr;
+	SNode* DestinationNode = nullptr;
 	bool bIsPathFound = false;
 #if DEBUG
 	int Iterator = 0;
