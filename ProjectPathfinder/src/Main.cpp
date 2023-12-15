@@ -1,5 +1,5 @@
 #include "Spoon.h"
-#include "SNode.h"
+#include "CustomNode.h"
 #include "AStar.h"
 
 class PathApp : public Application
@@ -21,38 +21,37 @@ int main()
 
 	// Make a Grid of Square
 	std::vector<SNode*> Grid;
-	int Col = 100;
-	int Row = 100;
-	int SquareSize = 5;
-	int Padding = 1;
+	unsigned GridPosition = 125;
+	unsigned GridSize = 10;
+	unsigned SquareSize = 10;
+	unsigned Padding = 40;
 
-	for (unsigned i = 0; i < Row; i++)
+	for (unsigned i = 0; i < GridSize; i++)
 	{	
-		for (unsigned j = 0; j < Col; j++)
+		for (unsigned j = 0; j < GridSize; j++)
 		{
-			SNode* Carre = app->GetWorld()->SpawnActor<SNode>(FTransform(FVector2D(SquareSize * j, SquareSize * i), FVector2D(SquareSize)));
-			Carre->SetLocation(FVector2D(j * SquareSize + Padding, i * SquareSize + Padding));
-			Carre->SetColor(FColor(0, 0, 255, 255));
-			Carre->SetWalkable(false);
-			Carre->bCanDiag = false;
-			Carre->x = j;
-			Carre->y = i;
-			Grid.push_back(Carre);
+			CustomNode* Node = app->GetWorld()->SpawnActor<CustomNode>(FTransform(FVector2D(SquareSize * j, SquareSize * i), FVector2D(SquareSize)));
+			Node->SetLocation(FVector2D(j * (SquareSize + Padding) + GridPosition, i * (SquareSize + Padding) + GridPosition));
+			Node->SetColor(FColor::White());
+			//Node->SetWalkable(false);
+			//Node->bCanDiag = false;
+			Node->x = j;
+			Node->y = i;
+			Grid.push_back(static_cast<SNode*>(Node));
 		}
 	}
 
 	int ID = 0;
 	for (unsigned i = 0; i < Grid.size() - 1; i++)
 	{
-		Grid[ID]->AddNeighbour(Grid, Col, Row, ID); 
-		//std::cout << Grid[ID]->x << " " << Grid[ID]->y << std::endl;
+		Grid[ID]->AddNeighbour(Grid, GridSize, GridSize, ID);
 		ID++;
 	}
 
 	AStar* oui = app->GetWorld()->SpawnActor<AStar>(FTransform());
+	oui->SetLocation(FVector2D(GridPosition, GridPosition));
 	
 	// define the start node and the destination node
-	// make sure that it is not a wall
 	SNode* Start = Grid[0];
 	Start->SetWalkable(true);
 	SNode* Destination = Grid[Grid.size() - 1];
@@ -62,13 +61,6 @@ int main()
 	oui->StartNode = Start;
 	oui->DestinationNode = Destination;
 	oui->OpenList.push_back(Start);
-
-	// TO DO
-	// stop le search when path is find
-	// faire en sorte que ça fonctionne avec une grille non carré
-	// show number of iteration at the end of the Path
-	//faire un video/gif de la recherche de path windows+g
-
 
 	app->Run();
 	delete app;
