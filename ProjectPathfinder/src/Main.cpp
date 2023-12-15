@@ -14,12 +14,40 @@ Application* CreateApplication()
 	return new PathApp();
 }
 
+void StartAStar(Application* app, unsigned GridPosition, const std::vector<SNode*>& Grid)
+{
+	AStar* oui = app->GetWorld()->SpawnActor<AStar>(FTransform());
+	oui->SetLocation(FVector2D(GridPosition, GridPosition));
+
+	// define the start node and the destination node
+	CustomNode* Start = static_cast<CustomNode*>(Grid[0]);
+	Start->BeStart();
+	CustomNode* Destination = static_cast<CustomNode*>(Grid[Grid.size() - 1]);
+	Destination->BeEnd();
+
+	// Put the start and destination node into the algo
+	oui->StartNode = Start;
+	oui->DestinationNode = Destination;
+	oui->OpenList.push_back(Start);
+}
+
+struct StartButton : SButton
+{
+	StartButton(SComposant* owner) : SButton(owner) {};
+	void OnPressed() override { StartAStar(app, pos, *grid); };
+	Application* app;
+	unsigned pos;
+	std::vector<SNode*>* grid;
+};
 
 int main()
 {
 	auto* app = CreateApplication();
 
+#pragma region Squares
+
 	// Make a Grid of Square
+	//todo: create grid class to be able to deal with inter-square operation (setting isEndSet/isStartSet)
 	std::vector<SNode*> Grid;
 	unsigned GridPosition = 125;
 	unsigned GridSize = 10;
@@ -31,12 +59,14 @@ int main()
 		for (unsigned j = 0; j < GridSize; j++)
 		{
 			CustomNode* Node = app->GetWorld()->SpawnActor<CustomNode>(FTransform(FVector2D(SquareSize * j, SquareSize * i), FVector2D(SquareSize)));
+
 			Node->SetLocation(FVector2D(j * (SquareSize + Padding) + GridPosition, i * (SquareSize + Padding) + GridPosition));
 			Node->SetColor(FColor::White());
-			//Node->SetWalkable(false);
-			//Node->bCanDiag = false;
+			Node->SetSquareSize(SquareSize + Padding);
+
 			Node->x = j;
 			Node->y = i;
+
 			Grid.push_back(static_cast<SNode*>(Node));
 		}
 	}
@@ -47,20 +77,17 @@ int main()
 		Grid[ID]->AddNeighbour(Grid, GridSize, GridSize, ID);
 		ID++;
 	}
+#pragma endregion
 
-	AStar* oui = app->GetWorld()->SpawnActor<AStar>(FTransform());
-	oui->SetLocation(FVector2D(GridPosition, GridPosition));
-	
-	// define the start node and the destination node
-	SNode* Start = Grid[0];
-	Start->SetWalkable(true);
-	SNode* Destination = Grid[Grid.size() - 1];
-	Destination->SetWalkable(true);
-
-	// Put the start and destination node into the algo
-	oui->StartNode = Start;
-	oui->DestinationNode = Destination;
-	oui->OpenList.push_back(Start);
+#pragma region StartButton
+	StartButton* startButton = CreateWidget<StartButton>();
+	startButton->app = app;
+	startButton->pos = GridPosition;
+	startButton->grid = &Grid;
+	startButton->SetLocation(FVector2D(950, 372));
+	startButton->SetSize(FVector2D(460, 100));
+	startButton->SetColor(FColor(217));
+#pragma endregion
 
 	app->Run();
 	delete app;

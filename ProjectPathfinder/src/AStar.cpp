@@ -5,9 +5,9 @@
 AStar::AStar()
 {
 	//Open Is green, close is red, path is White and obstacle is Grey
-	OpenColor = FColor(0, 255, 0, 255);
-	CloseColor = FColor(255, 0, 0, 255);
-	PathColor = FColor(255, 255, 255, 255);
+	OpenColor = FColor(255, 255, 255, 255);
+	CloseColor = FColor(136, 136, 136, 255);
+	PathColor = FColor(0, 0, 0, 255);
 }
 
 
