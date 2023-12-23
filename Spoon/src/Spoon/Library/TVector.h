@@ -210,12 +210,6 @@ struct SPOON_API Vector
 		return *this;
 	}
 
-	template <typename T>
-	std::ostream& operator<<(std::ostream& os, const Vector<T>& _var)
-	{
-		return os << "X: " << _var.X << " Y: " << _var.Y << " Z: " << _var.Z;
-	}
-
 	T GetSquareLength()
 	{
 		return (X * X) + (Y * Y) + (Z * Z);
@@ -227,4 +221,10 @@ struct SPOON_API Vector
 	}
 
 };
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const Vector<T>& _var)
+{
+	return os << "X: " << _var.X << " Y: " << _var.Y << " Z: " << _var.Z;
+}
 
