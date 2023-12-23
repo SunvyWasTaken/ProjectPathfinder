@@ -1,5 +1,6 @@
 #pragma once
 #include "Spoon/Core/SObject.h"
+#include "Spoon/Library/TColor.h"
 
 class SComposant : public SObject
 {
@@ -16,7 +17,7 @@ public:
 
 	virtual void OnUpdate() = 0;
 
-	inline class ObjectRender* GetRender() const { return Render; }
+	class ObjectRender* GetRender() const { return Render; }
 
 	template <typename T = SComposant>
 	T* GetOwner() const
@@ -24,9 +25,9 @@ public:
 		return (T*)Owner;
 	}
 
-	inline FColor& const GetColor() { return ObjectColor; }
+	FColor& const GetColor() { return ObjectColor; }
 
-	inline void SetColor(const FColor& _color) { ObjectColor = _color; }
+	void SetColor(const FColor& _color) { ObjectColor = _color; }
 
 private:
 

@@ -2,7 +2,7 @@
 #include "SfmlObject.h"
 #include "TextureMgr.h"
 #include "SfmlWindow.h"
-#include "Spoon/Library/FMath.h"
+#include "Spoon/Library/TColor.h"
 
 ObjectRender* ObjectRender::Create(SObject* owner, FColor* color)
 {
