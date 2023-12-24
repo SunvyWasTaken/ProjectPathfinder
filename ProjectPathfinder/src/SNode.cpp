@@ -24,11 +24,7 @@ int SNode::GetDistance(SNode* target)
 	FVector2D Loc = GetLocation();
 	FVector2D targetLoc = target->GetLocation();
 
-	float distance = FVector2D(targetLoc - Loc).GetLenght();
-
-	// Encore heureux que je fais une library de Math
-	//float distance = sqrt(pow(Loc.X - targetLoc.X, 2) + pow(Loc.Y - targetLoc.Y, 2));
-		
+	float distance = sqrt(pow(Loc.X - targetLoc.X, 2) + pow(Loc.Y - targetLoc.Y, 2));
 
 	return distance * 10;
 }
@@ -53,7 +49,7 @@ void SNode::AddNeighbour(std::vector<SNode*> Grid, int col, int row, int ID)
 	if (GetLocation().Y > 0)
 		Neighbours.push_back(Grid[ID - row]);*/
 
-
+	// Add Neighbour
 	if (x < col - 1)
 		Neighbours.push_back(Grid[ID + 1]);
 
@@ -61,24 +57,24 @@ void SNode::AddNeighbour(std::vector<SNode*> Grid, int col, int row, int ID)
 		Neighbours.push_back(Grid[ID - 1]);
 
 	if (y < row - 1)
-		Neighbours.push_back(Grid[ID + row]);
+		Neighbours.push_back(Grid[ID + col]);
 
 	if (y > 0)
-		Neighbours.push_back(Grid[ID - row]);
+		Neighbours.push_back(Grid[ID - col]);
 
 	if (bCanDiag)
 	{
 		if (x > 0 && y > 0)
-			Neighbours.push_back(Grid[ID - 1 - row]);
+			Neighbours.push_back(Grid[ID - 1 - col]);
 
 		if (x < col - 1 && y > 0)
-			Neighbours.push_back(Grid[ID + 1 - row]);
+			Neighbours.push_back(Grid[ID + 1 - col]);
 
 		if (x > 0 && y < row - 1)
-			Neighbours.push_back(Grid[ID - 1 + row]);
+			Neighbours.push_back(Grid[ID - 1 + col]);
 
 		if (x < col - 1 && y < row - 1)
-			Neighbours.push_back(Grid[ID + 1 + row]);
+			Neighbours.push_back(Grid[ID + 1 + col]);
 	}
 	
 
@@ -91,7 +87,7 @@ void SNode::SetWalkable(bool isSpecialNode)
 	std::uniform_int_distribution<> dis(0, 100);
 
 
-	if (dis(gen) >= 30 || isSpecialNode)
+	if (dis(gen) >= 20 || isSpecialNode)
 	{
 		SetColor(FColor(0, 0, 255, 255));
 		bIsWalkable = true;
