@@ -4,8 +4,6 @@
 #include "Spoon/Events/ApplicationEvent.h"
 #include "Spoon/Events/MouseEvent.h"
 
-#include <mutex>
-
 // Function call de maniere indirect lorsque j'ai besoin de la fenetre.
 Window* Window::Create(const WindowsProps& props)
 {
@@ -25,40 +23,48 @@ SfmlWindow::~SfmlWindow()
 
 void SfmlWindow::OnUpdate()
 {
-	sf::Event event;
-	while (WindowRef->pollEvent(event))
-	{
-		HandleEvent(event);
-	}
 	// Tick
 	sf::Time time = clock.getElapsedTime();
 	clock.restart();
-	AppTickEvent TickEvent(time.asSeconds());
+	AppTickEvent TickEvent(/*time.asSeconds()*/1.f/120.f);
 	EventCallBack(TickEvent);
 }
 
 void SfmlWindow::OnRender()
 {
-	std::mutex _mutex;
+	WindowRef->clear();
+	sf::Event event;
+	while (WindowRef->pollEvent(event))
+	{
+		HandleEvent(event);
+	}
+	
 	EventRenderBack();
+
 	WindowRef->display();
 }
 
 void SfmlWindow::Draw(const SActor* _currentActor)
 {
-	sf::RectangleShape* _currentShape = new sf::RectangleShape();
-	if (_currentShape == nullptr || _currentActor == nullptr)
+	if (_currentActor == nullptr)
 	{
 		return;
 	}
-	//_currentShape->setSize(sf::Vector2f(_currentActor->GetSize().X, _currentActor->GetSize().Y));
-	//_currentShape->setFillColor(sf::Color(_currentActor->GetColor().R, _currentActor->GetColor().G, _currentActor->GetColor().B, _currentActor->GetColor().A));
-	//_currentShape->setPosition(sf::Vector2f(_currentActor->GetLocation().X, _currentActor->GetLocation().Y));
+
+	sf::RectangleShape* _currentShape = new sf::RectangleShape();
+	if (_currentShape == nullptr)
+	{
+		return;
+	}
+	_currentShape->setSize(sf::Vector2f(_currentActor->GetSize().X, _currentActor->GetSize().Y));
+	_currentShape->setFillColor(sf::Color(_currentActor->GetColor().R, _currentActor->GetColor().G, _currentActor->GetColor().B, _currentActor->GetColor().A));
+	_currentShape->setPosition(sf::Vector2f(_currentActor->GetLocation().X, _currentActor->GetLocation().Y));
+
 	if (WindowRef != nullptr)
 	{
 		WindowRef->draw(*_currentShape);
 	}
-	delete _currentShape;
+	return;
 }
 
 unsigned int SfmlWindow::GetWidth() const
@@ -77,7 +83,6 @@ void SfmlWindow::Init(const WindowsProps& props)
 	m_Data.Height = props.Height;
 	m_Data.Width = props.Width;
 
-	// Create SFML window.
 	WindowRef = new sf::RenderWindow(sf::VideoMode(m_Data.Width, m_Data.Height), m_Data.Title);
 }
 

@@ -38,7 +38,6 @@ private:
 	bool OnWindowResize(class WindowResizeEvent& e);
 
 	void TickRun();
-	void GraphicRun();
 	void OnRender();
 
 	#pragma region WindowProperty

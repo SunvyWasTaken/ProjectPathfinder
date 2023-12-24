@@ -15,15 +15,16 @@ struct SPOON_API Vector2D
 
 	Vector2D<T>() : X(0), Y(0) {};
 
-	explicit Vector2D<T>(T _val) : X(_val), Y(_val) {};
+	explicit Vector2D<T>(const T& _val) : X(_val), Y(_val) {};
 
-	Vector2D<T>(T _x, T _y) : X(_x), Y(_y) {};
+	Vector2D<T>(const T& _x, const T& _y) : X(_x), Y(_y) {};
 
 	/************************************************************************/
 	/* Operator overload													*/
 	/************************************************************************/
 
-	Vector2D<T>& operator+=(const Vector2D<T>& _val)
+	template <typename L = T>
+	Vector2D<T>& operator+=(const Vector2D<L>& _val)
 	{
 		X += _val.X; Y += _val.Y;
 		return *this;
@@ -36,7 +37,8 @@ struct SPOON_API Vector2D
 		return *this;
 	}
 
-	Vector2D<T>& operator-=(const Vector2D<T>& _val)
+	template <typename L>
+	Vector2D<T>& operator-=(const Vector2D<L>& _val)
 	{
 		X -= _val.X; Y -= _val.Y;
 		return *this;
@@ -96,8 +98,8 @@ struct SPOON_API Vector2D
 
 };
 
-template <typename T>
-Vector2D<T> operator+(const Vector2D<T>& right, const Vector2D<T>& left)
+template <typename T, typename L = T>
+Vector2D<T> operator+(const Vector2D<T>& right, const Vector2D<L>& left)
 {
 	return Vector2D<T>(right.X + left.X, right.Y + left.Y);
 }
@@ -108,8 +110,8 @@ Vector2D<T> operator+(const Vector2D<T>& right, const L& left)
 	return Vector2D<T>(right.X + left, right.Y + left);
 }
 
-template <typename T>
-Vector2D<T> operator-(const Vector2D<T>& right, const Vector2D<T>& left)
+template <typename T, typename L = T>
+Vector2D<T> operator-(const Vector2D<T>& right, const Vector2D<L>& left)
 {
 	return Vector2D<T>(right.X - left.X, right.Y - left.Y);
 }

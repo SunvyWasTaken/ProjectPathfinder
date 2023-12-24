@@ -12,12 +12,13 @@ Application::Application() : WindowName("SpoonEngine"), ScreenSize(FVector2D(720
 {
 	s_Instance = this;
 	Init();
+	
 }
 
 Application::Application(std::string windowName, FVector2D screensize) : WindowName(windowName), ScreenSize(screensize)
 {
 	s_Instance = this;
-	Init();	
+	Init();
 }
 
 Application::~Application()
@@ -30,7 +31,7 @@ void Application::Init()
 	WindowsProps win(WindowName, ScreenSize.X, ScreenSize.Y);
 	m_WindowRef = Window::Create(win);
 	m_WindowRef->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
-	//m_WindowRef->SetEventRenderBack(std::bind(&Application::OnRender, this));
+	m_WindowRef->SetEventRenderBack(std::bind(&Application::OnRender, this));
 
 	CurrentLevel = new Level();
 }
@@ -38,11 +39,11 @@ void Application::Init()
 void Application::Run()
 {
 	std::thread LogicThread(std::bind(&Application::TickRun, this));
-	//std::thread Graphicthread(std::bind(&Application::GraphicRun, this));
-	LogicThread.join();
-	//Graphicthread.join();
 	LogicThread.detach();
-	//Graphicthread.detach();
+	while (bIsRunning)
+	{
+		m_WindowRef->OnRender();
+	}
 }
 
 void Application::OnEvent(SpoonEvent& e)
@@ -100,14 +101,6 @@ void Application::TickRun()
 	while (bIsRunning)
 	{
 		m_WindowRef->OnUpdate();
-	}
-}
-
-void Application::GraphicRun()
-{
-	while (bIsRunning)
-	{
-		//m_WindowRef->OnRender();
 	}
 }
 
