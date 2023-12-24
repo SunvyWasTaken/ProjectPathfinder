@@ -33,12 +33,14 @@ void SfmlWindow::OnUpdate()
 void SfmlWindow::OnRender()
 {
 	WindowRef->clear();
+
 	sf::Event event;
 	while (WindowRef->pollEvent(event))
 	{
+		// Todo maybe this function can be thread so the logic will still be separt with the render?
 		HandleEvent(event);
 	}
-	
+
 	EventRenderBack();
 
 	WindowRef->display();
@@ -54,9 +56,7 @@ void SfmlWindow::Draw(const SActor* _currentActor)
 	sf::RectangleShape _currentShape;
 
 	_currentShape.setSize(sf::Vector2f(_currentActor->GetSize().X, _currentActor->GetSize().Y));
-	std::unique_lock<std::mutex> _lock(_mutex);
 	_currentShape.setFillColor(sf::Color(_currentActor->GetColor().R, _currentActor->GetColor().G, _currentActor->GetColor().B, _currentActor->GetColor().A));
-	_lock.unlock();
 	_currentShape.setPosition(sf::Vector2f(_currentActor->GetLocation().X, _currentActor->GetLocation().Y));
 
 	if (WindowRef != nullptr)
