@@ -16,7 +16,6 @@ macro(GroupSources curdir)
             GroupSources(${curdir}/${child})
         else()
             string(REPLACE "/" "\\" groupname ${curdir})
-            # I would like to call the src root folder in a different name, only in visual studio (not mandatory requirement)
             source_group(${groupname} FILES
             ${PROJECT_SOURCE_DIR}/${curdir}/${child})
         endif()
@@ -26,19 +25,15 @@ endmacro()
 # Execute the macro
 GroupSources(src)
 
-find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
-find_package(imgui CONFIG REQUIRED)
-find_package(ImGui-SFML CONFIG REQUIRED)
-
 include_directories(${CMAKE_SOURCE_DIR}/${DLL_NAME}/src)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>:DEBUG>)
 
-add_dependencies(${PROJECT_NAME} ${DLL_NAME})
+find_package(SFML CONFIG REQUIRED COMPONENTS system window graphics)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-network sfml-graphics sfml-window Spoon )
+target_link_libraries(${PROJECT_NAME} PRIVATE ${DLL_NAME} sfml-system sfml-graphics sfml-window  )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 

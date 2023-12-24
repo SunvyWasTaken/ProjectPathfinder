@@ -30,11 +30,20 @@ endmacro()
 # Execute the macro
 GroupSources(src)
 
-find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
-find_package(imgui CONFIG REQUIRED)
-find_package(ImGui-SFML CONFIG REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCE_FILES})
+
+find_package(Threads REQUIRED)
+find_package(SFML CONFIG REQUIRED COMPONENTS system window graphics )
+#find_package(imgui CONFIG REQUIRED)
+#find_package(ImGui-SFML CONFIG REQUIRED)
+
+if (MSVC)
+    # Set Multi-threaded DLL flags
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MD")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
+endif()
 
 add_compile_definitions(SN_BUILD_DLL)
 
@@ -43,10 +52,10 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>:DEBUG>)
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-network sfml-graphics sfml-window
-	    imgui::imgui
-	    ImGui-SFML::ImGui-SFML
+target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-graphics sfml-window
+        Threads::Threads
 )
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${SOURCE_FILES})
+
 

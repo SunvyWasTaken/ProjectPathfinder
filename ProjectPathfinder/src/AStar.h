@@ -15,14 +15,14 @@ public:
 
 	virtual void Tick(float Deltatime) override;
 
-	std::vector<SNode*> Search();
+	void Search();
 
 	std::vector<SNode*> OpenList;
 	std::vector<SNode*> CloseList;
 	std::vector<SNode*> Path;
 	std::vector<SNode*> Obstacles;
-	SNode* StartNode;
-	SNode* DestinationNode;
+	SNode* StartNode = nullptr;
+	SNode* DestinationNode = nullptr;
 	bool bIsPathFound = false;
 #if DEBUG
 	int Iterator = 0;

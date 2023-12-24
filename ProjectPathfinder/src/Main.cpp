@@ -2,10 +2,14 @@
 #include "SNode.h"
 #include "AStar.h"
 
+#define GRID_SIZE 250
+#define SQSIZE 1
+#define PAD 1
+
 class PathApp : public Application
 {
 public:
-	PathApp() : Application("Pathfinder", FVector2D(1280, 720))
+	PathApp() : Application("Pathfinder", FVector2D(GRID_SIZE* SQSIZE + (GRID_SIZE *PAD), GRID_SIZE*SQSIZE + (GRID_SIZE *PAD)))
 	{}
 };
 
@@ -17,37 +21,40 @@ Application* CreateApplication()
 
 int main()
 {
-	auto* app = CreateApplication();
+	Application* app = CreateApplication();
 
 	// Make a Grid of Square
 	std::vector<SNode*> Grid;
-	int SquareSize = 20;
-	int Padding = 1;
-	int Col = 1280 / SquareSize;
-	int Row = 720 / SquareSize;
-	
+  
+	unsigned int Col = GRID_SIZE;
+	unsigned int Row = GRID_SIZE;
+	int SquareSize = SQSIZE;
+	int Padding = PAD;
 
-	for (unsigned i = 0; i < Row; i++)
+	for (unsigned int i = 0; i < Row; ++i)
 	{	
-		for (unsigned j = 0; j < Col; j++)
+		for (unsigned int j = 0; j < Col; ++j)
 		{
 			SNode* Carre = app->GetWorld()->SpawnActor<SNode>(FTransform(FVector2D(SquareSize * j, SquareSize * i), FVector2D(SquareSize)));
-			Carre->SetLocation(FVector2D(j * SquareSize + Padding, i * SquareSize + Padding));
-			Carre->SetColor(FColor(0, 0, 255, 255));
+			Carre->SetLocation(FVector2D(j * SquareSize + Padding * j, i * SquareSize + Padding * i));
+			Carre->SetColor(FColor::Blue());
 			Carre->SetWalkable(false);
 			Carre->bCanDiag = 1;
 			Carre->x = j;
 			Carre->y = i;
 			Grid.push_back(Carre);
+#ifdef DEBUG
+			std::cout << "A cell is create : " << (i+1) << std::endl;
+#endif // DEBUG
+
 		}
 	}
-
-	int ID = 0;
-	for (unsigned i = 0; i < Grid.size() - 1; i++)
+	for (unsigned int i = 0; i < Grid.size() - 1; ++i)
 	{
-		Grid[ID]->AddNeighbour(Grid, Col, Row, ID); 
-		//std::cout << Grid[ID]->x << " " << Grid[ID]->y << std::endl;
-		ID++;
+		Grid[i]->AddNeighbour(Grid, Col, Row, i);
+#ifdef _DEBUG
+		std::cout << Grid[i]->x << " " << Grid[i]->y << std::endl;
+#endif // _DEBUG
 	}
 
 	AStar* Algo = app->GetWorld()->SpawnActor<AStar>(FTransform());
@@ -66,7 +73,7 @@ int main()
 
 	// TO DO														
 	// stop le search when path is find								-> ok
-	// faire en sorte que ça fonctionne avec une grille non carré	
+	// faire en sorte que Ã§a fonctionne avec une grille non carrÃ©	
 	// show number of iteration at the end of the Path				-> ok
 	//faire un video/gif de la recherche de path windows+g			-> ok
 

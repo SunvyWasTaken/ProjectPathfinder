@@ -13,8 +13,6 @@ ECHO Initializing vcpkg packages
 ECHO =============================
 cd vcpkg
 vcpkg install sfml
-vcpkg install imgui
-vcpkg install imgui-sfml
 
 ECHO Initializing CMake project
 ECHO =============================

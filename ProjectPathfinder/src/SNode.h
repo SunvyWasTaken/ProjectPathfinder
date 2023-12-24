@@ -8,8 +8,8 @@ public:
 	SNode();
 	virtual ~SNode();
 
-	int x;
-	int y;
+	int x = 0;
+	int y = 0;
 
 	int GScore = 0;
 	int HScore = 0;

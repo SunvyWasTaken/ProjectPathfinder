@@ -5,9 +5,9 @@
 class SComposant : public SObject
 {
 
-friend class SWidget;
-
 public:
+
+	SComposant() = delete;
 
 	SComposant(class SComposant* owner = nullptr);
 
@@ -16,8 +16,6 @@ public:
 	virtual void OnEvent(class SpoonEvent& event) = 0;
 
 	virtual void OnUpdate() = 0;
-
-	class ObjectRender* GetRender() const { return Render; }
 
 	template <typename T = SComposant>
 	T* GetOwner() const
@@ -31,15 +29,11 @@ public:
 
 private:
 
-	bool RenderComposant(class Window* window);
-
 	SComposant* Owner;
 
 protected:
 
 	bool const IsInBound(const FVector2D& loc) const;
-
-	class ObjectRender* Render;
 
 	FColor ObjectColor;
 
