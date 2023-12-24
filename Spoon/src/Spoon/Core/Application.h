@@ -11,7 +11,6 @@ class Window;
 class SPOON_API Application
 {
 public:
-	Application();
 
 	Application(std::string windowName, FVector2D screensize);
 
@@ -23,11 +22,6 @@ public:
 
 	// Dispatch Event
 	void OnEvent(class SpoonEvent& e);
-
-	void PushOverlay(Layer* layer);
-	void PushLayer(Layer* layer);
-
-	class SWidget* GetLayerOverlay() const { return m_LayerOverlay; }
 
 	Level* GetWorld() const;
 
@@ -61,24 +55,7 @@ private:
 
 	Level* CurrentLevel;
 
-	LayerStack m_LayerStack;
-
-	class SWidget* m_LayerOverlay;
-
-
 	static Application* s_Instance;
 
 };
 
-Application* CreateApplication();
-
-template <typename TWidget = class SComposant>
-static TWidget* CreateWidget(class SComposant* owner = nullptr)
-{
-	TWidget* tmp = new TWidget(owner);
-
-	if(tmp && !owner)
-		Application::Get().GetLayerOverlay()->AddComposant(tmp);
-
-	return tmp;
-}

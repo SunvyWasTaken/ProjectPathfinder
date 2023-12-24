@@ -29,7 +29,6 @@ void SButton::OnUpdate()
 void SButton::AddChild(SComposant* _child)
 {
 	Child = _child;
-	Application::Get().GetLayerOverlay()->AddComposant(Child);
 }
 
 bool SButton::OnMouseMoved(MouseMovedEvent& event)

@@ -51,9 +51,9 @@ void SfmlWindow::Draw(const SActor* _currentActor)
 	{
 		return;
 	}
-	_currentShape->setSize(sf::Vector2f(_currentActor->GetSize().X, _currentActor->GetSize().Y));
-	_currentShape->setFillColor(sf::Color(_currentActor->GetColor().R, _currentActor->GetColor().G, _currentActor->GetColor().B, _currentActor->GetColor().A));
-	_currentShape->setPosition(sf::Vector2f(_currentActor->GetLocation().X, _currentActor->GetLocation().Y));
+	//_currentShape->setSize(sf::Vector2f(_currentActor->GetSize().X, _currentActor->GetSize().Y));
+	//_currentShape->setFillColor(sf::Color(_currentActor->GetColor().R, _currentActor->GetColor().G, _currentActor->GetColor().B, _currentActor->GetColor().A));
+	//_currentShape->setPosition(sf::Vector2f(_currentActor->GetLocation().X, _currentActor->GetLocation().Y));
 	if (WindowRef != nullptr)
 	{
 		WindowRef->draw(*_currentShape);

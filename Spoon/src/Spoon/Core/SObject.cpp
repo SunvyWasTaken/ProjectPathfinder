@@ -16,7 +16,10 @@ FVector2D SObject::GetLocation() const
 
 void SObject::SetLocation(const FVector2D& loc)
 {
+	std::mutex _mutex;
+	_mutex.lock();
 	ObjectTransform.Location = loc;
+	_mutex.unlock();
 }
 
 FVector2D SObject::GetSize() const
