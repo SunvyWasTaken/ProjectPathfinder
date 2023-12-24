@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 #include <snpch.h>
+#include "Spoon/Library/TStruct.h"
 
 class ObjectRender;
 

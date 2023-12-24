@@ -2,3 +2,7 @@
 #include "Spoon/Core/Level.h"
 #include "Object/SActor.h"
 #include "Object/Composant/SButton.h"
+
+#include "Spoon/Library/TVector.h"
+#include "Spoon/Library/TColor.h"
+#include "Spoon/Library/TStruct.h"

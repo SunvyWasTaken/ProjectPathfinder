@@ -1,7 +1,6 @@
 #pragma once
 #include "Object/SActor.h"
 #include "vector"
-#include "Spoon/Library/FMath.h"
 
 class SNode;
 
