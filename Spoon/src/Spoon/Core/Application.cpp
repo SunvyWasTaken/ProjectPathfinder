@@ -85,6 +85,7 @@ bool Application::OnAppTick(AppTickEvent& e)
 
 void Application::OnRender()
 {
+	// Todo : I should probably put a wait for the entity list to be construct to render
 	for (SActor* CurrentActor : GetWorld()->GetEntityList())
 	{
 		if(m_WindowRef)
