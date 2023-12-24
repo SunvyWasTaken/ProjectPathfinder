@@ -8,6 +8,9 @@ namespace sf { class Shape; };
 
 class SfmlWindow : public Window
 {
+
+	std::mutex _mutex;
+
 public:
 	SfmlWindow(const WindowsProps& props);
 	virtual ~SfmlWindow() override;

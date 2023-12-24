@@ -3,6 +3,7 @@
 
 #include "Spoon/Events/KeyEvent.h"
 #include "Spoon/Events/ApplicationEvent.h"
+#include "Spoon/Events/MouseEvent.h"
 
 Application* Application::s_Instance = nullptr;
 
@@ -54,6 +55,8 @@ void Application::OnEvent(SpoonEvent& e)
 
 	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 
+	dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_FN(Application::OnMouseMoved));
+
 }
 
 bool Application::OnWindowClose(WindowCloseEvent& e)
@@ -84,7 +87,8 @@ void Application::OnRender()
 {
 	for (SActor* CurrentActor : GetWorld()->GetEntityList())
 	{
-		m_WindowRef->Draw(CurrentActor);
+		if(m_WindowRef)
+			m_WindowRef->Draw(CurrentActor);
 	}
 	return;
 }
@@ -94,11 +98,22 @@ bool Application::OnWindowResize(WindowResizeEvent& e)
 	return true;
 }
 
+bool Application::OnMouseMoved(MouseMovedEvent& e)
+{
+	for (SActor* currentActor : CurrentLevel->GetEntityList())
+	{
+		currentActor->IsInBound(e.GetLoc());
+	}
+	return false;
+}
+
 void Application::TickRun()
 {
+	
 	while (bIsRunning)
 	{
-		m_WindowRef->OnUpdate();
+		if(m_WindowRef)
+			m_WindowRef->OnUpdate();
 	}
 }
 

@@ -35,6 +35,7 @@ private:
 	bool OnKeyPressed(class KeyPressedEvent& e);
 	bool OnAppTick(class AppTickEvent& e);
 	bool OnWindowResize(class WindowResizeEvent& e);
+	bool OnMouseMoved(class MouseMovedEvent& e);
 
 	void TickRun();
 	void OnRender();

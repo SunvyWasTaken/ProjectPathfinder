@@ -32,5 +32,7 @@ public:
 
 	void SetTransform(const FTransform& transform);
 
+	bool IsInBound(const FVector2D& _loc);
+
 };
 

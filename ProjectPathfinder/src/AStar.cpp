@@ -5,9 +5,9 @@
 AStar::AStar()
 {
 	//Open Is green, close is red, path is White and obstacle is Grey
-	OpenColor = FColor(0, 255, 0, 255);
-	CloseColor = FColor(255, 0, 0, 255);
-	PathColor = FColor(255, 255, 255, 255);
+	OpenColor = FColor::Green();
+	CloseColor = FColor::Red();
+	PathColor = FColor::White();
 }
 
 
@@ -29,11 +29,13 @@ AStar::~AStar()
 
 void AStar::Tick(float Deltatime)
 {
-	if(!bIsPathFound && StartNode && DestinationNode)
+	if (!bIsPathFound && StartNode && DestinationNode)
+	{
 		Search();
+	}
 }
 
-std::vector<SNode*> AStar::Search()
+void AStar::Search()
 {
 	//OpenList.push_back(StartNode);
 	if (!OpenList.empty())
@@ -80,7 +82,7 @@ std::vector<SNode*> AStar::Search()
 			std::cout << "nombre d'iteration " << Iterator << std::endl;
 #endif // DEBUG
 
-			return Path;
+			return;
 		}
 
 
@@ -115,7 +117,7 @@ std::vector<SNode*> AStar::Search()
 	{
 		// no solution
 		//std::cout << "Finish";
-		return std::vector<SNode*>();
+		return;
 	}
-	return std::vector<SNode*>();
+	return;
 }

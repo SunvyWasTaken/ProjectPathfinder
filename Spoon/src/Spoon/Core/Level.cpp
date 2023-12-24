@@ -5,12 +5,12 @@
 Level::~Level()
 {
 	auto ListObj = AddEntityList;
-	for (auto& obj : ListObj)
+	for (auto obj : ListObj)
 	{
 		obj->DestroyActor();
 	}
 	auto ListObject = EntityList;
-	for (auto& object : ListObject)
+	for (auto object : ListObject)
 	{
 		object->DestroyActor();
 	}
@@ -18,16 +18,25 @@ Level::~Level()
 
 void Level::UpdateEntity(double deltatime)
 {
-	for (auto& addEntity : AddEntityList)
+	if (!AddEntityList.empty())
 	{
-		EntityList.push_back(addEntity);
-		addEntity->BeginPlay();
+		bIsListBeingEdit = true;
+		auto tmpAddList = AddEntityList;
+		for (SActor* addEntity : tmpAddList)
+		{
+			if (addEntity != nullptr)
+			{
+				EntityList.push_back(addEntity);
+				addEntity->BeginPlay();
+			}
+		}
+		AddEntityList.clear();
+		bIsListBeingEdit = false;
 	}
-	AddEntityList.clear();
-	for (auto& entity : EntityList)
+	for (SActor* entity : EntityList)
 	{
-		// TODO A changer pour avoir l'actuel tick X)
-		entity->Tick(deltatime);
+		if(entity != nullptr)
+			entity->Tick(deltatime);
 	}
 }
 

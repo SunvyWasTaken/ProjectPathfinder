@@ -21,33 +21,35 @@ int main()
 
 	// Make a Grid of Square
 	std::vector<SNode*> Grid;
-	int Col = 100;
-	int Row = 100;
-	int SquareSize = 5;
+	unsigned int Col = 250;
+	unsigned int Row = 250;
+	int SquareSize = 2;
 	int Padding = 1;
 
-	for (unsigned i = 0; i < Row; i++)
+	for (unsigned int i = 0; i < Row; ++i)
 	{	
-		for (unsigned j = 0; j < Col; j++)
+		for (unsigned int j = 0; j < Col; ++j)
 		{
 			SNode* Carre = app->GetWorld()->SpawnActor<SNode>(FTransform(FVector2D(SquareSize * j, SquareSize * i), FVector2D(SquareSize)));
-			Carre->SetLocation(FVector2D(j * SquareSize + Padding, i * SquareSize + Padding));
-			Carre->SetColor(FColor(0, 0, 255, 255));
+			Carre->SetLocation(FVector2D(j * SquareSize + Padding * j, i * SquareSize + Padding * i));
+			Carre->SetColor(FColor::Blue());
 			Carre->SetWalkable(false);
 			Carre->bCanDiag = false;
 			Carre->x = j;
 			Carre->y = i;
 			Grid.push_back(Carre);
+#ifdef DEBUG
+			std::cout << "A cell is create : " << (i+1) << std::endl;
+#endif // DEBUG
+
 		}
 	}
+	for (unsigned int i = 0; i < Grid.size() - 1; ++i)
 	{
-		int ID = 0;
-		for (unsigned i = 0; i < Grid.size() - 1; i++)
-		{
-			Grid[ID]->AddNeighbour(Grid, Col, Row, ID); 
-			//std::cout << Grid[ID]->x << " " << Grid[ID]->y << std::endl;
-			ID++;
-		}
+		Grid[i]->AddNeighbour(Grid, Col, Row, i);
+#ifdef _DEBUG
+		std::cout << Grid[i]->x << " " << Grid[i]->y << std::endl;
+#endif // _DEBUG
 	}
 
 	AStar* oui = app->GetWorld()->SpawnActor<AStar>(FTransform());

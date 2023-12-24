@@ -10,8 +10,8 @@ endif()
 set(PROJECT_NAME "ProjectPathfinder")
 
 project(${PROJECT_NAME})
-add_subdirectory(${PROJECT_NAME})
 add_subdirectory(Spoon)
+add_subdirectory(${PROJECT_NAME})
 
 
 include("${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")

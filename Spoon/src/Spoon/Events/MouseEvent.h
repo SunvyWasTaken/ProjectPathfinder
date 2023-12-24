@@ -6,16 +6,18 @@
 class MouseMovedEvent : public SpoonEvent
 {
 public:
-	MouseMovedEvent(const int x, const int y)
-		: m_MouseX(x), m_MouseY(y) {}
+	MouseMovedEvent(const FVector2D& _loc)
+		: m_MouseLoc(_loc) {}
 
-	int GetX() const { return m_MouseX; }
-	int GetY() const { return m_MouseY; }
+	int GetX() const { return m_MouseLoc.X; }
+	int GetY() const { return m_MouseLoc.Y; }
+
+	FVector2D GetLoc() const { return m_MouseLoc; }
 
 	EVENT_CLASS_TYPE(MouseMoved)
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 private:
-	int m_MouseX, m_MouseY;
+	FVector2D m_MouseLoc;
 };
 
 class MouseScrolledEvent : public SpoonEvent

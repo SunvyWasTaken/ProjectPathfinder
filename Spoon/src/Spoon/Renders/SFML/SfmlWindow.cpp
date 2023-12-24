@@ -26,7 +26,7 @@ void SfmlWindow::OnUpdate()
 	// Tick
 	sf::Time time = clock.getElapsedTime();
 	clock.restart();
-	AppTickEvent TickEvent(/*time.asSeconds()*/1.f/120.f);
+	AppTickEvent TickEvent(time.asSeconds());
 	EventCallBack(TickEvent);
 }
 
@@ -51,19 +51,19 @@ void SfmlWindow::Draw(const SActor* _currentActor)
 		return;
 	}
 
-	sf::RectangleShape* _currentShape = new sf::RectangleShape();
-	if (_currentShape == nullptr)
-	{
-		return;
-	}
-	_currentShape->setSize(sf::Vector2f(_currentActor->GetSize().X, _currentActor->GetSize().Y));
-	_currentShape->setFillColor(sf::Color(_currentActor->GetColor().R, _currentActor->GetColor().G, _currentActor->GetColor().B, _currentActor->GetColor().A));
-	_currentShape->setPosition(sf::Vector2f(_currentActor->GetLocation().X, _currentActor->GetLocation().Y));
+	sf::RectangleShape _currentShape;
+
+	_currentShape.setSize(sf::Vector2f(_currentActor->GetSize().X, _currentActor->GetSize().Y));
+	std::unique_lock<std::mutex> _lock(_mutex);
+	_currentShape.setFillColor(sf::Color(_currentActor->GetColor().R, _currentActor->GetColor().G, _currentActor->GetColor().B, _currentActor->GetColor().A));
+	_lock.unlock();
+	_currentShape.setPosition(sf::Vector2f(_currentActor->GetLocation().X, _currentActor->GetLocation().Y));
 
 	if (WindowRef != nullptr)
 	{
-		WindowRef->draw(*_currentShape);
+		WindowRef->draw(_currentShape);
 	}
+
 	return;
 }
 
@@ -110,7 +110,7 @@ void SfmlWindow::HandleEvent(sf::Event& event)
 	}
 	else if (event.type == sf::Event::MouseMoved)
 	{
-		MouseMovedEvent tmpevent(event.mouseMove.x, event.mouseMove.y);
+		MouseMovedEvent tmpevent(FVector2D(event.mouseMove.x, event.mouseMove.y));
 		EventCallBack(tmpevent);
 	}
 	else if (event.type == sf::Event::MouseButtonPressed)

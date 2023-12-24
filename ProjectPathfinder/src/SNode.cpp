@@ -24,8 +24,10 @@ int SNode::GetDistance(SNode* target)
 	FVector2D Loc = GetLocation();
 	FVector2D targetLoc = target->GetLocation();
 
+	float distance = FVector2D(targetLoc - Loc).GetLenght();
 
-	float distance = sqrt(pow(Loc.X - targetLoc.X, 2) + pow(Loc.Y - targetLoc.Y, 2));
+	// Encore heureux que je fais une library de Math
+	//float distance = sqrt(pow(Loc.X - targetLoc.X, 2) + pow(Loc.Y - targetLoc.Y, 2));
 		
 
 	return distance * 10;
