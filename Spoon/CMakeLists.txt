@@ -5,6 +5,8 @@ set (SOURCE_FILES
 	src/snpch.cpp
 )
 
+find_package(Threads REQUIRED)
+
 file(GLOB_RECURSE PROJECT_SOURCE_FILES "*.h" "*.cpp")
 
 include_directories(src)
@@ -36,6 +38,13 @@ find_package(ImGui-SFML CONFIG REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCE_FILES})
 
+if (MSVC)
+    # Set Multi-threaded DLL flags
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MD")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
+endif()
+
 add_compile_definitions(SN_BUILD_DLL)
 
 #ajouté une compilation definition DEBUG pour la configuration debug
@@ -46,7 +55,9 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-network sfml-graphics sfml-window
 	    imgui::imgui
 	    ImGui-SFML::ImGui-SFML
+        Threads::Threads
 )
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${SOURCE_FILES})
+
 

@@ -39,8 +39,11 @@ private:
 	bool OnWindowClose(class WindowCloseEvent& e);
 	bool OnKeyPressed(class KeyPressedEvent& e);
 	bool OnAppTick(class AppTickEvent& e);
-	bool OnRender(class AppRenderEvent& e);
 	bool OnWindowResize(class WindowResizeEvent& e);
+
+	void TickRun();
+	void GraphicRun();
+	void OnRender();
 
 	#pragma region WindowProperty
 
@@ -52,7 +55,7 @@ private:
 
 private:
 
-	Window* WindowRef;
+	Window* m_WindowRef;
 
 	bool bIsRunning = true;
 

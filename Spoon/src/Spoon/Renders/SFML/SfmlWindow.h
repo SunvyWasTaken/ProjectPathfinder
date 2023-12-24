@@ -14,18 +14,22 @@ public:
 
 	void OnUpdate() override;
 
+	void OnRender() override;
+
+	virtual void Draw(const class SActor* _currentActor);
+
 	inline void SetEventCallback(const EventCallBackFn& callback) override { EventCallBack = callback;};
+
+	inline void SetEventRenderBack(const std::function<void()>& callback) override { EventRenderBack = callback; }
 	
 	unsigned int GetWidth() const override;
 	unsigned int GetHeight() const override;
-
-	void Draw(sf::Shape& currentShape);
 
 private:
 	
 	sf::Clock clock;
 
-	std::unique_ptr<sf::RenderWindow> WindowRef;
+	sf::RenderWindow* WindowRef;
 	
 	virtual void Init(const WindowsProps& props);
 
@@ -42,5 +46,7 @@ private:
 
 	// Function to callback
 	EventCallBackFn EventCallBack;
+
+	std::function<void()> EventRenderBack;
 };
 

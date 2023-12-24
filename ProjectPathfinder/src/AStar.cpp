@@ -29,7 +29,6 @@ AStar::~AStar()
 
 void AStar::Tick(float Deltatime)
 {
-	SActor::Tick(Deltatime);
 	if(!bIsPathFound && StartNode && DestinationNode)
 		Search();
 }

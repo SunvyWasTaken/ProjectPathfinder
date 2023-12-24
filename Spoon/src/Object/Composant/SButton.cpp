@@ -1,6 +1,5 @@
 #include "SButton.h"
 #include "Spoon/Events/MouseEvent.h"
-#include "Spoon/Core/ObjectRender.h"
 #include "Spoon/Core/Application.h"
 #include "Object/SWidget.h"
 #include <snpch.h>
@@ -25,11 +24,6 @@ void SButton::OnEvent(SpoonEvent& event)
 
 void SButton::OnUpdate()
 {
-	Render->OnUpdate();
-	if (Child)
-	{
-		Child->GetRender()->OnUpdate();
-	}
 }
 
 void SButton::AddChild(SComposant* _child)

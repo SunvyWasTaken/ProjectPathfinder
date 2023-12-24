@@ -24,7 +24,10 @@ public:
 	virtual ~Window() {};
 
 	virtual void OnUpdate() = 0;
+	virtual void OnRender() = 0;
+	virtual void Draw(const class SActor* _currentActor) = 0;
 	virtual void SetEventCallback(const EventCallBackFn& callback) = 0;
+	virtual void SetEventRenderBack(const std::function<void()>& callback) = 0;
 	virtual unsigned int GetWidth() const = 0;
 	virtual unsigned int GetHeight() const = 0;
 

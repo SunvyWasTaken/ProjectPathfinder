@@ -36,11 +36,16 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>:DEBUG>)
 
-add_dependencies(${PROJECT_NAME} ${DLL_NAME})
-
-target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-network sfml-graphics sfml-window Spoon )
+target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-network sfml-graphics sfml-window ${DLL_NAME} )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+
+if (MSVC)
+    # Set Multi-threaded DLL flags
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MT")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+endif()
 
 set(TARGET_FILE ${CMAKE_BINARY_DIR}/${DLL_NAME}/$<CONFIG>/${DLL_NAME}.dll)
 set(TARGET_FILE_DIR ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/$<CONFIG>)

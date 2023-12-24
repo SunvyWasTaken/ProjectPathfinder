@@ -1,19 +1,16 @@
 #include <snpch.h>
 #include "SActor.h"
-#include "Spoon/Core/ObjectRender.h"
 #include "Spoon/Core/Level.h"
 
 SActor::SActor() : 
 	SObject(),
 	ObjectColor(255, 255, 255, 255),
-	Render(ObjectRender::Create(this, &ObjectColor)),
 	WorldRef(nullptr)
 {}
 
 SActor::~SActor()
 {
 	SetWorldRef(nullptr);
-	delete Render;
 }
 
 void SActor::BeginPlay()
@@ -21,9 +18,7 @@ void SActor::BeginPlay()
 }
 
 void SActor::Tick(float DeltaTime)
-{
-	Render->OnUpdate();
-}
+{}
 
 void SActor::DestroyActor()
 {

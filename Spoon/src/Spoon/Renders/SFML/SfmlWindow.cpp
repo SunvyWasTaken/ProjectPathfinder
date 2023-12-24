@@ -1,7 +1,10 @@
 #include "SfmlWindow.h"
+#include "Object/SActor.h"
 #include "Spoon/Events/KeyEvent.h"
 #include "Spoon/Events/ApplicationEvent.h"
 #include "Spoon/Events/MouseEvent.h"
+
+#include <mutex>
 
 // Function call de maniere indirect lorsque j'ai besoin de la fenetre.
 Window* Window::Create(const WindowsProps& props)
@@ -22,7 +25,6 @@ SfmlWindow::~SfmlWindow()
 
 void SfmlWindow::OnUpdate()
 {
-	WindowRef->clear();
 	sf::Event event;
 	while (WindowRef->pollEvent(event))
 	{
@@ -33,12 +35,30 @@ void SfmlWindow::OnUpdate()
 	clock.restart();
 	AppTickEvent TickEvent(time.asSeconds());
 	EventCallBack(TickEvent);
-	// Puis render des items.
-	AppRenderEvent RenderEvent;
-	EventCallBack(RenderEvent);
+}
 
-	// Enfin display them all.
+void SfmlWindow::OnRender()
+{
+	std::mutex _mutex;
+	EventRenderBack();
 	WindowRef->display();
+}
+
+void SfmlWindow::Draw(const SActor* _currentActor)
+{
+	sf::RectangleShape* _currentShape = new sf::RectangleShape();
+	if (_currentShape == nullptr || _currentActor == nullptr)
+	{
+		return;
+	}
+	_currentShape->setSize(sf::Vector2f(_currentActor->GetSize().X, _currentActor->GetSize().Y));
+	_currentShape->setFillColor(sf::Color(_currentActor->GetColor().R, _currentActor->GetColor().G, _currentActor->GetColor().B, _currentActor->GetColor().A));
+	_currentShape->setPosition(sf::Vector2f(_currentActor->GetLocation().X, _currentActor->GetLocation().Y));
+	if (WindowRef != nullptr)
+	{
+		WindowRef->draw(*_currentShape);
+	}
+	delete _currentShape;
 }
 
 unsigned int SfmlWindow::GetWidth() const
@@ -51,11 +71,6 @@ unsigned int SfmlWindow::GetHeight() const
 	return m_Data.Height;
 }
 
-void SfmlWindow::Draw(sf::Shape& currentShape)
-{
-	WindowRef->draw(currentShape);
-}
-
 void SfmlWindow::Init(const WindowsProps& props)
 {
 	m_Data.Title = props.Title;
@@ -63,7 +78,7 @@ void SfmlWindow::Init(const WindowsProps& props)
 	m_Data.Width = props.Width;
 
 	// Create SFML window.
-	WindowRef = std::make_unique<sf::RenderWindow>(sf::VideoMode(m_Data.Width, m_Data.Height), m_Data.Title);
+	WindowRef = new sf::RenderWindow(sf::VideoMode(m_Data.Width, m_Data.Height), m_Data.Title);
 }
 
 void SfmlWindow::Shutdown()

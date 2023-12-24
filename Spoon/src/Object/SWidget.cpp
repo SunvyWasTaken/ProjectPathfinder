@@ -21,12 +21,7 @@ void SWidget::OnUpdate()
 }
 
 void SWidget::Render(Window* window)
-{
-	for (auto composant : ComposantList)
-	{
-		composant->RenderComposant(window);
-	}
-}
+{}
 
 void SWidget::AddComposant(SComposant* compo)
 {
