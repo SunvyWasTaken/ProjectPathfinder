@@ -2,14 +2,15 @@
 #include "SNode.h"
 #include "AStar.h"
 
-#define GRID_SIZE 250
+#define ROW 250
+#define COL 250
 #define SQSIZE 1
 #define PAD 1
 
 class PathApp : public Application
 {
 public:
-	PathApp() : Application("Pathfinder", FVector2D(GRID_SIZE* SQSIZE + (GRID_SIZE *PAD), GRID_SIZE*SQSIZE + (GRID_SIZE *PAD)))
+	PathApp() : Application("Pathfinder", FVector2D(COL* SQSIZE + (COL *PAD), ROW*SQSIZE + (ROW *PAD)))
 	{}
 };
 
@@ -26,8 +27,8 @@ int main()
 	// Make a Grid of Square
 	std::vector<SNode*> Grid;
   
-	unsigned int Col = GRID_SIZE;
-	unsigned int Row = GRID_SIZE;
+	unsigned int Col = COL;
+	unsigned int Row = ROW;
 	int SquareSize = SQSIZE;
 	int Padding = PAD;
 
