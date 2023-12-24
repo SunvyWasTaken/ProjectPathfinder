@@ -4,8 +4,6 @@
 #include "Spoon/Events/KeyEvent.h"
 #include "Spoon/Events/ApplicationEvent.h"
 
-#include "Object/SWidget.h"
-
 Application* Application::s_Instance = nullptr;
 
 Application::Application() : WindowName("SpoonEngine"), ScreenSize(FVector2D(720, 1080))

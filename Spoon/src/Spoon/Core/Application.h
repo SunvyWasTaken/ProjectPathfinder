@@ -1,7 +1,6 @@
 #pragma once
 #include "Core.h"
-#include "LayerStack.h"
-#include "Object/SWidget.h"
+#include "Spoon/Library/TVector.h"
 #include <snpch.h>
 
 class Level;
