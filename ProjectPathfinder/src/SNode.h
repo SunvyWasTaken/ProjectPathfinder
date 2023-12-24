@@ -27,3 +27,4 @@ public:
 	std::vector<SNode*> Neighbours;
 	SNode* Connection = nullptr;
 };
+
