@@ -6,12 +6,15 @@
 
 #include "Object/SWidget.h"
 
-#include <thread>
-#include <mutex>
-
 Application* Application::s_Instance = nullptr;
 
-Application::Application(std::string windowName, FVector2D screensize) : WindowName(windowName), ScreenSize(screensize), m_WindowRef(nullptr)
+Application::Application() : WindowName("SpoonEngine"), ScreenSize(FVector2D(720, 1080))
+{
+	s_Instance = this;
+	Init();
+}
+
+Application::Application(std::string windowName, FVector2D screensize) : WindowName(windowName), ScreenSize(screensize)
 {
 	s_Instance = this;
 	Init();	
@@ -24,8 +27,8 @@ Application::~Application()
 
 void Application::Init()
 {
-	//WindowsProps win(WindowName, ScreenSize.X, ScreenSize.Y);
-	m_WindowRef = Window::Create();
+	WindowsProps win(WindowName, ScreenSize.X, ScreenSize.Y);
+	m_WindowRef = Window::Create(win);
 	m_WindowRef->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 	//m_WindowRef->SetEventRenderBack(std::bind(&Application::OnRender, this));
 

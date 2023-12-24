@@ -12,6 +12,8 @@ class SPOON_API Application
 {
 public:
 
+	Application();
+
 	Application(std::string windowName, FVector2D screensize);
 
 	virtual ~Application();
