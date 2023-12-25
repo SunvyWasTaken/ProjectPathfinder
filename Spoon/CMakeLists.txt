@@ -35,8 +35,8 @@ add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCE_FILES})
 
 find_package(Threads REQUIRED)
 find_package(SFML CONFIG REQUIRED COMPONENTS system window graphics )
-#find_package(imgui CONFIG REQUIRED)
-#find_package(ImGui-SFML CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(ImGui-SFML CONFIG REQUIRED)
 
 if (MSVC)
     # Set Multi-threaded DLL flags
@@ -53,6 +53,8 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>:DEBUG>)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-graphics sfml-window
+	    imgui::imgui
+	    ImGui-SFML::ImGui-SFML
         Threads::Threads
 )
 

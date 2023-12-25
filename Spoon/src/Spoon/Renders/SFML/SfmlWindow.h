@@ -39,8 +39,8 @@ private:
 	virtual void Shutdown();
 	struct Data
 	{
-		std::string Title;
-		unsigned int Width, Height;
+		std::string Title = "";
+		unsigned int Width, Height = 0;
 	};
 
 	Data m_Data;
