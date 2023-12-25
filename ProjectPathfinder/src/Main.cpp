@@ -5,7 +5,7 @@
 class PathApp : public Application
 {
 public:
-	PathApp() : Application("Pathfinder", FVector2D(COl* SQSIZE + (COL *PAD), ROW*SQSIZE + (ROW *PAD)))
+	PathApp() : Application("Pathfinder", FVector2D(COL* SQSIZE + (COL *PAD), ROW*SQSIZE + (ROW *PAD)))
 	{
 		SetLevel(new AStarLevel()); 
 	}
