@@ -47,6 +47,8 @@ private:
 
 	void HandleEvent(sf::Event& event);
 
+	void DrawImGuiWin();
+
 	// Function to callback
 	EventCallBackFn EventCallBack;
 

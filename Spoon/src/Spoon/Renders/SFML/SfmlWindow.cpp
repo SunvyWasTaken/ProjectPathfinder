@@ -4,6 +4,7 @@
 #include "Spoon/Events/ApplicationEvent.h"
 #include "Spoon/Events/MouseEvent.h"
 
+#include "imgui.h"
 #include <imgui-SFML.h>
 
 // Function call de maniere indirect lorsque j'ai besoin de la fenetre.
@@ -36,8 +37,6 @@ void SfmlWindow::OnUpdate()
 
 void SfmlWindow::OnRender()
 {
-	WindowRef->clear();
-
 	sf::Event event;
 	while (WindowRef->pollEvent(event))
 	{
@@ -48,9 +47,13 @@ void SfmlWindow::OnRender()
 
 	ImGui::SFML::Update(*WindowRef, clock.getElapsedTime());
 
-	ImGui::SFML::Render(*WindowRef);
+	WindowRef->clear();	
+
+	DrawImGuiWin();
 
 	EventRenderBack();
+
+	ImGui::SFML::Render(*WindowRef);
 
 	WindowRef->display();
 }
@@ -138,4 +141,24 @@ void SfmlWindow::HandleEvent(sf::Event& event)
 		EventCallBack(tmpevent);
 	}
 	// TODO mettre le reste des events qui pourrais servire ici.
+}
+
+void SfmlWindow::DrawImGuiWin()
+{
+	ImGuiWindowFlags imFlags =
+		ImGuiWindowFlags_NoDecoration
+		| ImGuiWindowFlags_NoTitleBar
+		| ImGuiWindowFlags_AlwaysAutoResize
+		| ImGuiWindowFlags_NoSavedSettings
+		| ImGuiWindowFlags_NoFocusOnAppearing
+		| ImGuiWindowFlags_NoNav;
+	ImGui::SetNextWindowSize(sf::Vector2f(50,50));
+	ImGui::SetNextWindowPos(sf::Vector2f(0,0));
+	ImGui::SetNextWindowBgAlpha(0.5f);
+
+	ImGui::Begin("Tools");
+
+	ImGui::Button("Tile Type");
+
+	ImGui::End();
 }
