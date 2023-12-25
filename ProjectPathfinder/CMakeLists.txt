@@ -36,6 +36,9 @@ find_package(SFML CONFIG REQUIRED COMPONENTS system window graphics)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${DLL_NAME} sfml-system sfml-graphics sfml-window  )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+if (MSVC)
+    set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+endif()
 
 set(TARGET_FILE ${CMAKE_BINARY_DIR}/${DLL_NAME}/$<CONFIG>/${DLL_NAME}.dll)
 set(TARGET_FILE_DIR ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/$<CONFIG>)

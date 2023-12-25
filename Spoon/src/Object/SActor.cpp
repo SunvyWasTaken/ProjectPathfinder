@@ -2,7 +2,7 @@
 #include "SActor.h"
 #include "Spoon/Core/Level.h"
 
-SActor::SActor() : 
+SActor::SActor() :
 	SObject(),
 	ObjectColor(255, 255, 255, 255),
 	WorldRef(nullptr)
@@ -14,8 +14,7 @@ SActor::~SActor()
 }
 
 void SActor::BeginPlay()
-{
-}
+{}
 
 void SActor::Tick(float DeltaTime)
 {}
@@ -23,6 +22,11 @@ void SActor::Tick(float DeltaTime)
 void SActor::DestroyActor()
 {
 	delete this;
+}
+
+Level* SActor::GetWorld() const
+{
+	return WorldRef;
 }
 
 

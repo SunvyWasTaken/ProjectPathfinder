@@ -3,8 +3,6 @@
 #include <snpch.h>
 #include "Spoon/Library/TStruct.h"
 
-class ObjectRender;
-
 // Object base. 
 class SPOON_API SObject
 {

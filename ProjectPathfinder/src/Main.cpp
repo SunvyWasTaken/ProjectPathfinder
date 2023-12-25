@@ -17,7 +17,13 @@ Application* CreateApplication()
 }
 
 
+
+
+#ifdef DEBUG
 int main()
+#else
+int WinMain()
+#endif // DEBUG
 {
 	Application* app = CreateApplication();
 	app->Run();
@@ -25,4 +31,5 @@ int main()
 
 	return 0;
 }
+
 

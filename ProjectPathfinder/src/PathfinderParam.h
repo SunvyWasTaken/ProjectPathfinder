@@ -1,8 +1,8 @@
 #pragma once
 
 
-#define ROW 250
-#define COL 250
+#define ROW 500
+#define COL 500
 #define SQSIZE 1
 #define PAD 1
 
