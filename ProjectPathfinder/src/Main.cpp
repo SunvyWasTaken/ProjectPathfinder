@@ -17,8 +17,6 @@ Application* CreateApplication()
 }
 
 
-
-
 #ifdef DEBUG
 int main()
 #else

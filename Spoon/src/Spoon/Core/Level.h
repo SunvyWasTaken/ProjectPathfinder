@@ -1,9 +1,10 @@
 #pragma once
 #include "Core.h"
 #include "Window.h"
-#include "Object/SActor.h"
 
 #include <vector>
+
+class SActor;
 
 // TODO Levels
 // je dois déplacer pour faire en sorte que ce soit pas à moi de faire ça.
@@ -12,14 +13,11 @@ class SPOON_API Level
 {
 	std::mutex _mutex;
 
+	friend class Application;
+
 public:
 
-
 	virtual ~Level();
-
-	virtual void BeginPlay() = 0;
-
-	void UpdateEntity(double deltatime);
 
 	template<typename T = SActor>
 	T* SpawnActor(const FTransform& transform)
@@ -29,12 +27,23 @@ public:
 		{
 			tmp->SetTransform(transform);
 			tmp->SetWorldRef(this);
+			AddObject(tmp);
 		}
 		// Cast vide du coup c mort.
 		return tmp;
 	}
 
 	std::vector<SActor*> GetEntityList() const { return (bIsListBeingEdit) ? std::vector<SActor*>() : EntityList; }
+
+	void DestroyActor(class SActor* _actor);
+
+protected:
+
+	virtual void BeginPlay() = 0;
+
+private:
+
+	void UpdateEntity(double deltatime);
 
 	void RemoveObject(class SActor* obj);
 

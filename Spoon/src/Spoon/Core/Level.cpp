@@ -1,6 +1,7 @@
 #include "snpch.h"
 #include "Level.h"
 #include "SObject.h"
+#include "Object/SActor.h"
 
 Level::~Level()
 {
@@ -14,6 +15,16 @@ Level::~Level()
 	{
 		object->DestroyActor();
 	}
+}
+
+void Level::DestroyActor(class SActor* _actor)
+{
+	if (!_actor)
+		return;
+
+	RemoveObject(_actor);
+	_actor->SetWorldRef(nullptr);
+	delete _actor;
 }
 
 void Level::UpdateEntity(double deltatime)

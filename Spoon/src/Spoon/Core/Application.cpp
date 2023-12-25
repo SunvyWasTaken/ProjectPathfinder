@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Level.h"
 
+#include "Object/SActor.h"
 #include "Spoon/Events/KeyEvent.h"
 #include "Spoon/Events/ApplicationEvent.h"
 #include "Spoon/Events/MouseEvent.h"
@@ -35,10 +36,15 @@ void Application::Init()
 
 void Application::Run()
 {
-	if (CurrentLevel)
+	if (!CurrentLevel)
 	{
-		CurrentLevel->BeginPlay();
+#ifdef DEBUG
+		std::cout << "No Level found." << std::endl;
+#endif // DEBUG
+
+		return;
 	}
+	CurrentLevel->BeginPlay();
 	std::thread LogicThread(std::bind(&Application::TickRun, this));
 	LogicThread.detach();
 	while (bIsRunning)

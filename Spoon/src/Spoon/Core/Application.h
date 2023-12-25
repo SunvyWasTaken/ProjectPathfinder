@@ -9,6 +9,7 @@ class Window;
 
 class SPOON_API Application
 {
+
 public:
 
 	Application();
@@ -26,7 +27,7 @@ public:
 
 	Level* GetWorld() const;
 
-	__forceinline static Application& Get() { return *s_Instance; }
+	static Application& Get() { return *s_Instance; }
 
 protected:
 
