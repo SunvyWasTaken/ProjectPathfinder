@@ -1,7 +1,8 @@
 #pragma once
 
 
-#define GRID_SIZE 250
+#define ROW 250
+#define COL 250
 #define SQSIZE 1
 #define PAD 1
 

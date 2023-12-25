@@ -8,8 +8,8 @@ void AStarLevel::BeginPlay()
 	// Make a Grid of Square
 	std::vector<SNode*> Grid;
 
-	unsigned int Col = GRID_SIZE;
-	unsigned int Row = GRID_SIZE;
+	unsigned int Col = COL;
+	unsigned int Row = ROW;
 	int SquareSize = SQSIZE;
 	int Padding = PAD;
 
