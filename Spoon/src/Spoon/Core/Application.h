@@ -28,6 +28,10 @@ public:
 
 	__forceinline static Application& Get() { return *s_Instance; }
 
+protected:
+
+	void SetLevel(class Level* _newLevel, const bool DestroyPrevious = false);
+
 private:
 
 	// Event
