@@ -10,4 +10,4 @@
 ## Build
 
 The project can be build in debug and release.
-- Rebuild the All-Project two time (Yes there is a bug with the copy of the sfml.dll
+- Rebuild the All-Project two time (Yes there is a bug with the copy of the sfml.dll)
