@@ -17,6 +17,8 @@ public:
 
 	virtual ~Level();
 
+	virtual void BeginPlay() = 0;
+
 	void UpdateEntity(double deltatime);
 
 	template<typename T = SActor>

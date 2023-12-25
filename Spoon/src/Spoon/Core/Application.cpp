@@ -22,7 +22,7 @@ Application::Application(std::string windowName, FVector2D screensize) : WindowN
 
 Application::~Application()
 {
-	delete CurrentLevel;
+	SetLevel(nullptr, true);
 }
 
 void Application::Init()
@@ -31,12 +31,14 @@ void Application::Init()
 	m_WindowRef = Window::Create(win);
 	m_WindowRef->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 	m_WindowRef->SetEventRenderBack(std::bind(&Application::OnRender, this));
-
-	CurrentLevel = new Level();
 }
 
 void Application::Run()
 {
+	if (CurrentLevel)
+	{
+		CurrentLevel->BeginPlay();
+	}
 	std::thread LogicThread(std::bind(&Application::TickRun, this));
 	LogicThread.detach();
 	while (bIsRunning)
@@ -57,6 +59,15 @@ void Application::OnEvent(SpoonEvent& e)
 
 	dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_FN(Application::OnMouseMoved));
 
+}
+
+void Application::SetLevel(class Level* _newLevel, const bool DestroyPrevious /*= false*/)
+{
+	if (DestroyPrevious && CurrentLevel)
+	{
+		delete CurrentLevel;
+	}
+	CurrentLevel = _newLevel;
 }
 
 bool Application::OnWindowClose(WindowCloseEvent& e)
@@ -110,7 +121,6 @@ bool Application::OnMouseMoved(MouseMovedEvent& e)
 
 void Application::TickRun()
 {
-	
 	while (bIsRunning)
 	{
 		if(m_WindowRef)
