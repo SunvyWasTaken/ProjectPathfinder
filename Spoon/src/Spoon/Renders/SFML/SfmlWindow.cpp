@@ -4,8 +4,10 @@
 #include "Spoon/Events/ApplicationEvent.h"
 #include "Spoon/Events/MouseEvent.h"
 
+#ifndef DEBUG
 #include "imgui.h"
 #include <imgui-SFML.h>
+#endif // DEBUG
 
 // Function call de maniere indirect lorsque j'ai besoin de la fenetre.
 Window* Window::Create(const WindowsProps& props)
@@ -38,20 +40,28 @@ void SfmlWindow::OnRender()
 	sf::Event event;
 	while (WindowRef->pollEvent(event))
 	{
+#ifndef DEBUG
 		ImGui::SFML::ProcessEvent(event);
+#endif // DEBUG
+
 		// Todo maybe this function can be thread so the logic will still be separt with the render?
 		HandleEvent(event);
 	}
-
+#ifndef DEBUG
 	ImGui::SFML::Update(*WindowRef, PreviousFrameTime);
+#endif // DEBUG
+
 
 	WindowRef->clear();	
-
+#ifndef DEBUG
 	DrawImGuiWin();
+#endif // DEBUG
 
 	EventRenderBack();
 
+#ifndef DEBUG
 	ImGui::SFML::Render(*WindowRef);
+#endif // DEBUG
 
 	WindowRef->display();
 }
@@ -96,13 +106,17 @@ void SfmlWindow::Init(const WindowsProps& props)
 	WindowRef = new sf::RenderWindow(sf::VideoMode(m_Data.Width, m_Data.Height), m_Data.Title);
 
 	// TODO faire la window imgui here so it will be better for setting and get the button.
+#ifndef DEBUG
 	ImGui::SFML::Init(*WindowRef);
+#endif // DEBUG
 
 }
 
 void SfmlWindow::Shutdown()
 {
+#ifndef DEBUG
 	ImGui::SFML::Shutdown();
+#endif // DEBUG
 	WindowRef->close();
 }
 
@@ -141,6 +155,7 @@ void SfmlWindow::HandleEvent(sf::Event& event)
 	// TODO mettre le reste des events qui pourrais servire ici.
 }
 
+#ifndef DEBUG
 void SfmlWindow::DrawImGuiWin()
 {
 	ImGuiWindowFlags imFlags =
@@ -160,3 +175,4 @@ void SfmlWindow::DrawImGuiWin()
 
 	ImGui::End();
 }
+#endif // DEBUG

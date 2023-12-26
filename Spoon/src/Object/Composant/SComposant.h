@@ -23,18 +23,8 @@ public:
 		return (T*)Owner;
 	}
 
-	FColor& const GetColor() { return ObjectColor; }
-
-	void SetColor(const FColor& _color) { ObjectColor = _color; }
-
 private:
 
 	SComposant* Owner;
-
-protected:
-
-	bool const IsInBound(const FVector2D& loc) const;
-
-	FColor ObjectColor;
 
 };
