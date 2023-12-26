@@ -27,11 +27,9 @@ SfmlWindow::~SfmlWindow()
 void SfmlWindow::OnUpdate()
 {
 	// Tick
-	std::unique_lock<std::mutex> _lock(_mutex);
-	sf::Time time = clock.getElapsedTime();
+	PreviousFrameTime = clock.getElapsedTime();
 	clock.restart();
-	_lock.unlock();
-	AppTickEvent TickEvent(time.asSeconds());
+	AppTickEvent TickEvent(PreviousFrameTime.asSeconds());
 	EventCallBack(TickEvent);
 }
 
@@ -45,7 +43,7 @@ void SfmlWindow::OnRender()
 		HandleEvent(event);
 	}
 
-	ImGui::SFML::Update(*WindowRef, clock.getElapsedTime());
+	ImGui::SFML::Update(*WindowRef, PreviousFrameTime);
 
 	WindowRef->clear();	
 

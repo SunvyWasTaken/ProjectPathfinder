@@ -32,6 +32,8 @@ private:
 	
 	sf::Clock clock;
 
+	sf::Time PreviousFrameTime;
+
 	sf::RenderWindow* WindowRef;
 	
 	virtual void Init(const WindowsProps& props);
